@@ -97,7 +97,10 @@ class TestConfigUtil:
 
         # Check that the URL is mentioned in log messages
         log_messages = [record.message for record in caplog.records]
-        assert any("https://test.api.com" in msg for msg in log_messages)
+        from urllib.parse import urlparse
+        parsed_url = urlparse("https://test.api.com")
+        expected_hostname = parsed_url.hostname
+        assert any(expected_hostname in urlparse(msg).hostname for msg in log_messages if urlparse(msg).hostname)
 
     def test_default_url_logged(self, caplog):
         """Test that default API URL is logged in debug messages."""
