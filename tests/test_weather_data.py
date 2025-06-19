@@ -9,9 +9,7 @@ class TestWeatherData:
 
     def test_create_weather_data_valid(self):
         """Test creating WeatherData with valid inputs."""
-        weather = WeatherData(
-            city="London", temperature_celsius=15.5, description="Partly cloudy"
-        )
+        weather = WeatherData(city="London", temperature_celsius=15.5, description="Partly cloudy")
 
         assert weather.city == "London"
         assert weather.temperature_celsius == 15.5
@@ -19,18 +17,14 @@ class TestWeatherData:
 
     def test_create_weather_data_with_integer_temperature(self):
         """Test creating WeatherData with integer temperature."""
-        weather = WeatherData(
-            city="Paris", temperature_celsius=20, description="Clear sky"
-        )
+        weather = WeatherData(city="Paris", temperature_celsius=20, description="Clear sky")
 
         assert weather.temperature_celsius == 20
         assert isinstance(weather.temperature_celsius, int)
 
     def test_weather_data_is_immutable(self):
         """Test that WeatherData objects are immutable."""
-        weather = WeatherData(
-            city="Tokyo", temperature_celsius=25.0, description="Sunny"
-        )
+        weather = WeatherData(city="Tokyo", temperature_celsius=25.0, description="Sunny")
 
         with pytest.raises(AttributeError):
             weather.city = "Osaka"
@@ -74,21 +68,15 @@ class TestWeatherData:
 
     def test_string_representation(self):
         """Test the string representation of WeatherData."""
-        weather = WeatherData(
-            city="Amsterdam", temperature_celsius=12.7, description="Light rain"
-        )
+        weather = WeatherData(city="Amsterdam", temperature_celsius=12.7, description="Light rain")
 
-        expected = (
-            "Weather for Amsterdam:\n" "Temperature: 12.7°C\n" "Conditions: Light rain"
-        )
+        expected = "Weather for Amsterdam:\n" "Temperature: 12.7°C\n" "Conditions: Light rain"
 
         assert str(weather) == expected
 
     def test_string_representation_integer_temperature(self):
         """Test string representation with integer temperature."""
-        weather = WeatherData(
-            city="Vienna", temperature_celsius=20, description="Clear"
-        )
+        weather = WeatherData(city="Vienna", temperature_celsius=20, description="Clear")
 
         expected = "Weather for Vienna:\n" "Temperature: 20.0°C\n" "Conditions: Clear"
 
@@ -96,26 +84,18 @@ class TestWeatherData:
 
     def test_equality(self):
         """Test equality comparison of WeatherData objects."""
-        weather1 = WeatherData(
-            city="Stockholm", temperature_celsius=8.5, description="Overcast"
-        )
+        weather1 = WeatherData(city="Stockholm", temperature_celsius=8.5, description="Overcast")
 
-        weather2 = WeatherData(
-            city="Stockholm", temperature_celsius=8.5, description="Overcast"
-        )
+        weather2 = WeatherData(city="Stockholm", temperature_celsius=8.5, description="Overcast")
 
-        weather3 = WeatherData(
-            city="Stockholm", temperature_celsius=10.0, description="Overcast"
-        )
+        weather3 = WeatherData(city="Stockholm", temperature_celsius=10.0, description="Overcast")
 
         assert weather1 == weather2
         assert weather1 != weather3
 
     def test_hash(self):
         """Test that WeatherData objects are hashable."""
-        weather = WeatherData(
-            city="Helsinki", temperature_celsius=5.0, description="Snow"
-        )
+        weather = WeatherData(city="Helsinki", temperature_celsius=5.0, description="Snow")
 
         # Should not raise an exception
         hash(weather)

@@ -97,9 +97,7 @@ class TestOpenWeatherMapClient:
         mock_response.text = "Internal server error"
         mock_get.return_value = mock_response
 
-        with pytest.raises(
-            WeatherApiException, match="Weather service is temporarily unavailable"
-        ):
+        with pytest.raises(WeatherApiException, match="Weather service is temporarily unavailable"):
             self.client.get_weather_from_api("London")
 
     @patch("weather_cli.weather_client.requests.get")
@@ -146,14 +144,10 @@ class TestOpenWeatherMapClient:
 
     def test_validate_city_name_invalid_characters(self):
         """Test validation of city names with invalid characters."""
-        with pytest.raises(
-            WeatherApiException, match="City name contains invalid characters"
-        ):
+        with pytest.raises(WeatherApiException, match="City name contains invalid characters"):
             self.client._validate_city_name("London<script>")
 
-        with pytest.raises(
-            WeatherApiException, match="City name contains invalid characters"
-        ):
+        with pytest.raises(WeatherApiException, match="City name contains invalid characters"):
             self.client._validate_city_name("Paris&Berlin")
 
     def test_build_api_url(self):
@@ -273,9 +267,7 @@ class TestWeatherApiClientInterface:
 
         class TestClient(WeatherApiClient):
             def get_weather_from_api(self, city: str) -> WeatherData:
-                return WeatherData(
-                    city=city, temperature_celsius=20.0, description="Test weather"
-                )
+                return WeatherData(city=city, temperature_celsius=20.0, description="Test weather")
 
         client = TestClient()
         result = client.get_weather_from_api("Test City")

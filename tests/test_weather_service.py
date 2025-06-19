@@ -44,9 +44,7 @@ class TestWeatherService:
     def test_get_weather_strips_whitespace(self):
         """Test that city name whitespace is stripped."""
         mock_client = Mock(spec=WeatherApiClient)
-        expected_weather = WeatherData(
-            city="Paris", temperature_celsius=20.0, description="Sunny"
-        )
+        expected_weather = WeatherData(city="Paris", temperature_celsius=20.0, description="Sunny")
         mock_client.get_weather_from_api.return_value = expected_weather
 
         service = WeatherService(client=mock_client)
@@ -60,9 +58,7 @@ class TestWeatherService:
         mock_client = Mock(spec=WeatherApiClient)
         service = WeatherService(client=mock_client)
 
-        with pytest.raises(
-            WeatherApiException, match="City name cannot be null or empty"
-        ):
+        with pytest.raises(WeatherApiException, match="City name cannot be null or empty"):
             service.get_weather("")
 
         # Client should not be called
@@ -73,9 +69,7 @@ class TestWeatherService:
         mock_client = Mock(spec=WeatherApiClient)
         service = WeatherService(client=mock_client)
 
-        with pytest.raises(
-            WeatherApiException, match="City name cannot be null or empty"
-        ):
+        with pytest.raises(WeatherApiException, match="City name cannot be null or empty"):
             service.get_weather("   ")
 
         # Client should not be called
@@ -86,9 +80,7 @@ class TestWeatherService:
         mock_client = Mock(spec=WeatherApiClient)
         service = WeatherService(client=mock_client)
 
-        with pytest.raises(
-            WeatherApiException, match="City name cannot be null or empty"
-        ):
+        with pytest.raises(WeatherApiException, match="City name cannot be null or empty"):
             service.get_weather(None)
 
         # Client should not be called
@@ -97,9 +89,7 @@ class TestWeatherService:
     def test_get_weather_api_exception_propagated(self):
         """Test that WeatherApiException from client is propagated."""
         mock_client = Mock(spec=WeatherApiClient)
-        mock_client.get_weather_from_api.side_effect = WeatherApiException(
-            "City not found"
-        )
+        mock_client.get_weather_from_api.side_effect = WeatherApiException("City not found")
 
         service = WeatherService(client=mock_client)
 
@@ -115,9 +105,7 @@ class TestWeatherService:
 
         service = WeatherService(client=mock_client)
 
-        with pytest.raises(
-            WeatherApiException, match="Unexpected error: Unexpected error"
-        ):
+        with pytest.raises(WeatherApiException, match="Unexpected error: Unexpected error"):
             service.get_weather("TestCity")
 
         mock_client.get_weather_from_api.assert_called_once_with("TestCity")
@@ -125,9 +113,7 @@ class TestWeatherService:
     def test_get_weather_logging_success(self, caplog):
         """Test logging for successful weather retrieval."""
         mock_client = Mock(spec=WeatherApiClient)
-        expected_weather = WeatherData(
-            city="Tokyo", temperature_celsius=25.0, description="Clear"
-        )
+        expected_weather = WeatherData(city="Tokyo", temperature_celsius=25.0, description="Clear")
         mock_client.get_weather_from_api.return_value = expected_weather
 
         service = WeatherService(client=mock_client)
@@ -137,13 +123,8 @@ class TestWeatherService:
 
         # Check log messages
         log_messages = [record.message for record in caplog.records]
-        assert any(
-            "Fetching weather data for city: Tokyo" in msg for msg in log_messages
-        )
-        assert any(
-            "Successfully retrieved weather data for Tokyo" in msg
-            for msg in log_messages
-        )
+        assert any("Fetching weather data for city: Tokyo" in msg for msg in log_messages)
+        assert any("Successfully retrieved weather data for Tokyo" in msg for msg in log_messages)
 
     def test_get_weather_logging_empty_city(self, caplog):
         """Test logging for empty city name error."""
@@ -171,10 +152,7 @@ class TestWeatherService:
 
         # Check error log message
         log_messages = [record.message for record in caplog.records]
-        assert any(
-            "Failed to fetch weather data for city: TestCity" in msg
-            for msg in log_messages
-        )
+        assert any("Failed to fetch weather data for city: TestCity" in msg for msg in log_messages)
 
     def test_get_weather_logging_unexpected_exception(self, caplog):
         """Test logging for unexpected exceptions."""
@@ -209,12 +187,8 @@ class TestWeatherService:
         """Test multiple calls to get_weather with same service instance."""
         mock_client = Mock(spec=WeatherApiClient)
 
-        weather1 = WeatherData(
-            city="City1", temperature_celsius=10.0, description="Cold"
-        )
-        weather2 = WeatherData(
-            city="City2", temperature_celsius=30.0, description="Hot"
-        )
+        weather1 = WeatherData(city="City1", temperature_celsius=10.0, description="Cold")
+        weather2 = WeatherData(city="City2", temperature_celsius=30.0, description="Hot")
 
         mock_client.get_weather_from_api.side_effect = [weather1, weather2]
 

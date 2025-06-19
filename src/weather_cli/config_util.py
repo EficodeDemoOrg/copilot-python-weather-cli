@@ -65,7 +65,5 @@ class ConfigUtil:
             logger.debug(f"Using API base URL from environment: {url}")
             return url
         else:
-            logger.debug(
-                f"Using default API base URL: {ConfigUtil.DEFAULT_API_BASE_URL}"
-            )
+            logger.debug(f"Using default API base URL: {ConfigUtil.DEFAULT_API_BASE_URL}")
             return ConfigUtil.DEFAULT_API_BASE_URL

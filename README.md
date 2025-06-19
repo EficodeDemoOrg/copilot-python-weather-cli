@@ -78,9 +78,17 @@ pip install -r requirements.txt
 Run the app from the project root:
 
 ```bash
-PYTHONPATH=src python -m weather_cli.main "London"
-PYTHONPATH=src python -m weather_cli.main "New York"
-PYTHONPATH=src python -m weather_cli.main "Tokyo"
+python -m weather_cli.main "London"
+python -m weather_cli.main "New York"
+python -m weather_cli.main "Tokyo"
+```
+
+Or use the installed script:
+
+```bash
+weather "London"
+weather "New York"  
+weather "Tokyo"
 ```
 
 You can use any city name. The app will print the current weather for that city.
@@ -90,7 +98,13 @@ You can use any city name. The app will print the current weather for that city.
 You can see all available options with:
 
 ```bash
-PYTHONPATH=src python -m weather_cli.main --help
+python -m weather_cli.main --help
+```
+
+Or:
+
+```bash
+weather --help
 ```
 
 Example output:
@@ -135,23 +149,23 @@ python-weather-cli/
 
 - **Run all tests:**
   ```bash
-  PYTHONPATH=src pytest
+  pytest
   ```
 - **Run tests with coverage:**
   ```bash
-  PYTHONPATH=src pytest --cov=weather_cli tests/
+  pytest --cov=src
   ```
 - **Format code with black:**
   ```bash
-  black src/ tests/
+  black src tests
   ```
 - **Lint code with flake8:**
   ```bash
-  flake8 src/ tests/
+  flake8 src tests
   ```
 - **Type check with mypy:**
   ```bash
-  mypy src/
+  mypy src
   ```
 
 ## Testing
@@ -159,9 +173,9 @@ python-weather-cli/
 This project includes comprehensive unit tests covering all major components and functionality. The test suite ensures reliability, security, and proper error handling across the application.
 
 **Quick testing commands:**
-- Run all tests: `PYTHONPATH=src pytest`
-- Run with coverage: `PYTHONPATH=src pytest --cov=weather_cli tests/`
-- Run specific test file: `PYTHONPATH=src pytest tests/test_weather_client.py`
+- Run all tests: `pytest`
+- Run with coverage: `pytest --cov=src`
+- Run specific test file: `pytest tests/test_weather_client.py`
 
 The testing approach includes:
 - **Unit testing** with mocked dependencies for isolation
@@ -175,15 +189,20 @@ For detailed information about what is tested and how, see [tests/TESTING.md](te
 ## Code style
 
 - This project uses [black](https://black.readthedocs.io/) for formatting and [flake8](https://flake8.pycqa.org/) for linting.
-- The maximum line length for flake8 is set to **100 characters** (see `pyproject.toml`).
+- The maximum line length is set to **100 characters** for both tools.
+- Target Python version: 3.10+
 
 To check code style:
 ```bash
-flake8 src/ tests/
+flake8 src tests
 ```
 To auto-format code:
 ```bash
-black src/ tests/
+black src tests
+```
+To type check:
+```bash
+mypy src
 ```
 
 ---

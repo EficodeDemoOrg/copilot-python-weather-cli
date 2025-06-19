@@ -181,18 +181,12 @@ class OpenWeatherMapClient(WeatherApiClient):
         Raises:
             WeatherApiException: With an appropriate error message
         """
-        logger.error(
-            f"API error - Status code: {status_code}, Response: {response_text}"
-        )
+        logger.error(f"API error - Status code: {status_code}, Response: {response_text}")
 
         if status_code == 401:
-            raise WeatherApiException(
-                "Invalid API key. Please check your API key configuration."
-            )
+            raise WeatherApiException("Invalid API key. Please check your API key configuration.")
         elif status_code == 404:
-            raise WeatherApiException(
-                "City not found. Please check the city name and try again."
-            )
+            raise WeatherApiException("City not found. Please check the city name and try again.")
         elif status_code == 429:
             raise WeatherApiException("Rate limit exceeded. Please try again later.")
         elif 500 <= status_code < 600:
@@ -200,6 +194,4 @@ class OpenWeatherMapClient(WeatherApiClient):
                 f"Weather service is temporarily unavailable. HTTP status: {status_code}"
             )
         else:
-            raise WeatherApiException(
-                f"API error: Received HTTP status code {status_code}"
-            )
+            raise WeatherApiException(f"API error: Received HTTP status code {status_code}")

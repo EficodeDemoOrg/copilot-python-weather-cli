@@ -67,9 +67,7 @@ class TestRunWeatherCli:
 
     @patch("weather_cli.main.WeatherService")
     @patch("weather_cli.main.setup_logging")
-    def test_run_weather_cli_success(
-        self, mock_setup_logging, mock_weather_service_class
-    ):
+    def test_run_weather_cli_success(self, mock_setup_logging, mock_weather_service_class):
         """Test successful weather CLI run."""
         # Setup mocks
         mock_service = Mock()
@@ -97,16 +95,12 @@ class TestRunWeatherCli:
 
     @patch("weather_cli.main.WeatherService")
     @patch("weather_cli.main.setup_logging")
-    def test_run_weather_cli_debug(
-        self, mock_setup_logging, mock_weather_service_class
-    ):
+    def test_run_weather_cli_debug(self, mock_setup_logging, mock_weather_service_class):
         """Test weather CLI run with debug enabled."""
         mock_service = Mock()
         mock_weather_service_class.return_value = mock_service
 
-        weather_data = WeatherData(
-            city="Paris", temperature_celsius=20.0, description="Sunny"
-        )
+        weather_data = WeatherData(city="Paris", temperature_celsius=20.0, description="Sunny")
         mock_service.get_weather.return_value = weather_data
 
         with patch("sys.stdout", new_callable=StringIO):
@@ -117,9 +111,7 @@ class TestRunWeatherCli:
 
     @patch("weather_cli.main.WeatherService")
     @patch("weather_cli.main.setup_logging")
-    def test_run_weather_cli_config_exception(
-        self, mock_setup_logging, mock_weather_service_class
-    ):
+    def test_run_weather_cli_config_exception(self, mock_setup_logging, mock_weather_service_class):
         """Test handling of configuration exceptions."""
         mock_service = Mock()
         mock_weather_service_class.return_value = mock_service

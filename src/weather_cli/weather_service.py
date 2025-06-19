@@ -50,7 +50,5 @@ class WeatherService:
             logger.error(f"Failed to fetch weather data for city: {city}")
             raise
         except Exception as e:
-            logger.error(
-                f"Unexpected error while fetching weather data for {city}: {e}"
-            )
+            logger.error(f"Unexpected error while fetching weather data for {city}: {e}")
             raise WeatherApiException(f"Unexpected error: {str(e)}")
