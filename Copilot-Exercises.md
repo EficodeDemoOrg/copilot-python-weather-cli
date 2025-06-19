@@ -4,12 +4,17 @@ This document provides a series of exercises designed to help you learn and prac
 
 **Key Copilot Interaction Points:**
 
-* **Chat View:** Used for asking questions, generating code/tests/docs, and initiating actions. Modes like "Ask" (default), "Edits", and "Agent" might be selectable via a dropdown menu within the Chat view interface itself.
+* **Chat View:** Used for asking questions, generating code/tests/docs, and initiating actio### Exercise 3.6: Extracting and Applying Project Style Guidelines
+
+* **Purpose:** To ensure Copilot-generated code aligns with your project's style and linting rules.
+* **Aim:** Practice using Copilot to summarize your code style (from Black, Flake8, and mypy), and use that summary to create a `.copilot-instructions.md` file for consistent code generation.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Requires analysis of configuration files and synthesis into actionable guidelines
+* **Steps:**odes like "Ask" (default), "Edits", and "Agent" might be selectable via a dropdown menu within the Chat view interface itself.
 * **Inline Chat:** Quick chat directly in the editor (Default: `Cmd+I` / `Ctrl+I`), often used for quick explanations or edits on selected code. Allows reviewing multiple suggestions using keyboard shortcuts (e.g., `Alt+]`/`Option+]` or check the Command Palette for "Copilot: View Next/Previous Suggestion").
 * **Participants (`@` references):** Used to bring specific, broad contexts into the chat, such as the entire workspace (`@workspace`) or the VS Code environment itself (`@vscode`). **Important Limitation:** You can only use **one participant** (e.g., `@workspace` OR `@vscode`) in a single chat prompt.
 * **Variables (`#` references):** Used to provide more granular context to Copilot (e.g., files `#file`, selections `#selection`, symbols `#sym`, symbol usages/definitions `#usage`, changes `#changes`, codebase structure `#codebase`, web content `#fetch`, last terminal command `#terminalLastCommand`, terminal selection `#terminalSelection`). Variables *can* be combined with a participant (e.g., `@workspace #file:weather_data.py`).
     * **Interactive Selection:** For files, folders, symbols (`#sym`), and usage queries (`#usage`), you typically type `#` and then start typing the name; VS Code's UI will suggest matching items from your workspace for you to select easily (e.g., typing `#weather` might suggest the `weather_client.py` file and the `WeatherService` class symbol).
-    * **Drag and Drop:** You can also often drag files or folders directly from the VS Code Explorer into the Chat input area to add them as context.
+    * **Drag and Drop:** You can also often drag files or folders directly from the VS Code Explorer into the Chat input area to add them as context. **Tip:** Use whichever method feels most convenient for you—both achieve the same result.
 * **Slash Commands:** Used within the Chat view or inline chat to direct Copilot's actions (e.g., `/explain`, `/tests`, `/fix`, `/new`).
 * **Code Completion:** Automatic suggestions as you type.
 * **Custom Instructions:** Files like `.github/copilot-instructions.md` can guide Copilot's suggestions for the workspace.
@@ -19,6 +24,8 @@ This document provides a series of exercises designed to help you learn and prac
 Both `@workspace` and `#codebase` provide Copilot with context about your entire project or workspace files, serving **essentially the same core function**. However, their usage context can differ:
 * `@workspace` is the standard **participant** for general questions about the project, typically used within the default "Ask" mode of the Chat view. As a participant, it adheres to the **one-participant-per-prompt** rule.
 * `#codebase` is a **variable** that also refers to the workspace context. You might observe that `#codebase` is particularly effective or required when using specific modes like "Edits" or "Agent" (`/new`), where a deeper analysis or generation based on the entire codebase structure is required. Since it's a variable, it doesn't conflict with the one-participant rule if you needed to use `@vscode` alongside workspace context (though combining `@vscode` and `#codebase` is an uncommon scenario).
+
+> **Tip:** While Copilot often uses the whole codebase as context by default, explicitly referencing `#codebase` can help ensure your intent is clear—especially for tasks that require broad project understanding or when using modes like "Edits" or "Agent". Making context explicit can improve the quality and relevance of Copilot’s responses.
 
 These exercises generally use `@workspace` for broad "Ask" queries and `#codebase` when broad context seems needed for Agent/Edit tasks, reflecting common patterns and the potential need for `#codebase` in those specific modes. Feel free to experiment to see what works best in your specific scenario.
 
@@ -33,6 +40,16 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 ---
 
+## Model Selection Guide
+
+**🤖 CHOOSING THE RIGHT AI MODEL:**
+
+For detailed information about available AI models, their capabilities, and pricing, see the [GitHub Copilot AI Models Documentation](https://docs.github.com/en/copilot/using-github-copilot/ai-models/choosing-the-right-ai-model-for-your-task).
+
+Each exercise below includes a specific model recommendation with rationale. You can always experiment with different models to see how they perform for your specific use case.
+
+---
+
 ## Section 1: Explore the Codebase and Environment
 
 **Goal:** Use Copilot Chat with various context providers (`@workspace`, `#file`, `#folder`, `#sym`, `#usage`, `#fetch`, `#terminalLastCommand`, `#terminalSelection`, `@vscode`) to quickly understand the project, its dependencies, relationships between components, the development environment, and external information.
@@ -43,6 +60,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To get a high-level understanding of the project's goals, main components, and structure using the broad workspace context.
 * **Aim:** Practice using the `@workspace` participant in Copilot Chat for broad project questions in "Ask" mode.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Simple explanation task that doesn't require advanced reasoning
 * **Steps:**
     1.  Open the Copilot Chat view in VS Code. Ensure the mode is "Ask".
     2.  In the chat input, type the following prompt and press Enter:
@@ -55,6 +73,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To dive deeper into the functionality of a single module.
 * **Aim:** Practice referencing a file using the `#` prefix with interactive selection.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Straightforward code analysis task
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type `#` in the chat input.
@@ -67,6 +86,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To understand the external libraries.
 * **Aim:** Practice referencing `requirements.txt` and `pyproject.toml` using the `#` prefix with interactive selection.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Basic dependency explanation task
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type `#` and start typing `requirements`. Select `requirements.txt` from the suggestions.
@@ -78,6 +98,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To automatically generate documentation.
 * **Aim:** Practice using the `#selection` variable for editor content.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Standard docstring generation task
 * **Steps:**
     1.  Open the file `src/weather_cli/weather_service.py`.
     2.  Locate and select the entire method signature and body of the `get_weather(self, city: str)` method.
@@ -93,6 +114,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To get a summary of the code within a directory.
 * **Aim:** Practice referencing a folder using the `#` prefix with interactive selection.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Simple code summarization task
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type `#` and start typing `weather_cli`. Select the *folder* `src/weather_cli` from the suggestions (it will likely insert `#folder:src/...`).
@@ -104,6 +126,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To understand a specific function or class.
 * **Aim:** Practice referencing a symbol using the `#` prefix with interactive selection.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Focused code analysis task
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  **Example 1 (Method):**
@@ -118,6 +141,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To quickly view external web content, such as API documentation, directly within VS Code's simple browser. This is useful for easily checking the contents of a page before using `#fetch` or for general browsing related to the project.
 * **Aim:** Practice using the `#openSimpleBrowser` variable to open URLs.
+* **🤖 Recommended Model:** Not applicable - This is a browser functionality, not AI-powered
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  To preview the OpenWeatherMap API documentation page directly in VS Code before potentially using `#fetch` on it, type the following prompt:
@@ -131,6 +155,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To pull in information from an external URL.
 * **Aim:** Practice using the `#fetch` variable.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Web content analysis and summarization
 * **Steps:**
     1.  The README mentions the OpenWeatherMap API. Let's ask about its current weather endpoint documentation.
     2.  Open the Copilot Chat view.
@@ -144,6 +169,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To understand how the fields in the `WeatherData` class correspond to the actual data provided by the OpenWeatherMap API.
 * **Aim:** Practice using `#fetch` to get API schema details and `#file` to reference a specific project file for comparison.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Requires cross-referencing and analytical reasoning between web content and code. Alternative: Gemini 2.0 Flash for larger context handling
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type the following prompt:
@@ -156,6 +182,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To get help with VS Code features or settings relevant to the project.
 * **Aim:** Practice using the `@vscode` participant to ask questions about the editor environment. Remember only one `@` participant per prompt.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Standard VS Code feature explanations
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Think of a question about VS Code relevant to Python development (see examples below).
@@ -169,6 +196,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To use Copilot to explain commands executed in the integrated terminal.
 * **Aim:** Practice using the `#terminalLastCommand` variable.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Simple command explanation task
 * **Steps:**
     1.  Open the integrated terminal in VS Code (View > Terminal).
     2.  Run a command relevant to the project, for example:
@@ -187,6 +215,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To get clarification on specific parts of the output shown in the integrated terminal.
 * **Aim:** Practice using the `#terminalSelection` variable.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Basic output interpretation task
 * **Steps:**
     1.  In the integrated terminal, run a command that produces some detailed output, for example:
         ```bash
@@ -204,6 +233,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To understand where a specific class, method, or variable is used within the project.
 * **Aim:** Practice using the `#usage` variable combined with interactive symbol selection to find references.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Code reference analysis task
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Think of a symbol you want to find usages for (e.g., the `WeatherData` class or the `WeatherService#getWeather` method).
@@ -215,6 +245,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To discover all classes that implement a specific interface.
 * **Aim:** Practice using `#usage` with an interface symbol to find its implementations.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Interface implementation discovery task
 * **Steps:**
     1.  The project structure indicates a `WeatherApiClient` abstract base class. Let's find its implementations.
     2.  Open the Copilot Chat view.
@@ -226,6 +257,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To bring the results from VS Code's Search view into Copilot Chat for summarization, analysis, or to provide context for further questions.
 * **Aim:** Practice using the `#searchResults` variable.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Search result summarization task
 * **Steps:**
     1.  First, perform a search in VS Code. For example, open the Search view (View > Search or `Cmd+Shift+F` / `Ctrl+Shift+F`) and search for the term `WeatherData` across the project.
     2.  Once the search results are populated in the Search panel, open the Copilot Chat view.
@@ -247,6 +279,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To generate a list of potential enhancements.
 * **Aim:** Practice using `#codebase` (or `@workspace`) for creative suggestions.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Creative ideation benefits from superior reasoning capabilities
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type the following prompt:
@@ -259,6 +292,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To flesh out the details of one specific feature idea.
 * **Aim:** Practice having a conversational follow-up using `#codebase` (or `@workspace`) context.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Deep analysis and architectural thinking required
 * **Steps:**
     1.  Choose one idea (e.g., adding forecast data).
     2.  In the Copilot Chat view, ask:
@@ -271,6 +305,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To identify areas where error handling could be improved.
 * **Aim:** Practice using `#codebase` (or `@workspace`) to analyze potential weaknesses.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Requires thorough code analysis and architectural understanding
 * **Steps:**
     1.  In the Copilot Chat view, type:
         ```
@@ -282,6 +317,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To determine if a potential new feature (e.g., displaying "feels like" temperature) is supported by the OpenWeatherMap API and how it might be accessed.
 * **Aim:** Practice using `#fetch` to consult API documentation when considering new features and `#codebase` to provide context of the current application.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Complex cross-referencing between API docs and codebase. Alternative: Gemini 2.0 Flash for handling large context from multiple sources
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Assume you are considering adding a "feels like" temperature reading to the weather output.
@@ -303,6 +339,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** Add humidity data, use Edits mode.
 * **Aim:** Practice completion & Edits mode.
+* **🤖 Recommended Model:** GPT-4.1 (default) for code completion, Claude Sonnet 3.7 for Edits mode - Simple field addition with targeted edits
 * **Steps:**
     1.  **Modify `weather_data.py` (Code Completion):**
         * Open the file. Add `humidity: int` as a new field to the `WeatherData` dataclass. Use code completion for the field definition.
@@ -324,6 +361,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** Automatically generate unit tests.
 * **Aim:** Practice `/tests` with `#` file referencing (interactive selection).
+* **🤖 Recommended Model:** GPT-4.1 (default) - Standard test generation task
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type `#` and select `tests/test_weather_client.py`.
@@ -338,6 +376,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** Modify existing code via Edits mode.
 * **Aim:** Practice Edits mode for refactoring.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Refactoring requires understanding code flow and making intelligent changes
 * **Steps:**
     1.  *(Assumption: `config_util.py` exists with `get_api_key()` reading only the environment variable.)*
     2.  Open `src/weather_cli/config_util.py`.
@@ -354,6 +393,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** Use Copilot Agents (`/new`) to scaffold.
 * **Aim:** Practice the `/new` command with `#codebase` context (as `/new` often requires broad project understanding).
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Agent tasks requiring codebase understanding and new component creation
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type the following prompt:
@@ -373,6 +413,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** Use Copilot to summarize pending changes.
 * **Aim:** Practice using `#changes`.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Simple change summarization task
 * **Steps:**
     1.  Make a few small, distinct changes to one or two files (e.g., add a comment in `main.py`, modify the output format slightly).
     2.  **Save the files.**
@@ -385,10 +426,36 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         ```
     7.  Review Copilot's summary of your pending modifications.
 
-### Exercise 3.6: Customizing Copilot with Shared Instructions
+### Exercise 3.6: Extracting and Applying Project Style Guidelines
+
+* **Purpose:** To ensure Copilot-generated code aligns with your project’s style and linting rules.
+* **Aim:** Practice using Copilot to summarize your code style (from Black, Flake8, and mypy), and use that summary to create a `.copilot-instructions.md` file for consistent code generation.
+* **Steps:**
+    1. **Summarize Style Rules:**
+        - Open Copilot Chat.
+        - Reference your `pyproject.toml`, `setup.cfg`, and `requirements-dev.txt` (add them to context using `#` or drag-and-drop).
+        - Prompt:  
+          ```
+          /explain Summarize the most important code style and linting rules for this project, based on Black, Flake8, and mypy configurations. Focus on formatting, naming, typing, and any strict rules that should be followed.
+          ```
+        - Review Copilot’s summary and copy the key points.
+    2. **Draft Copilot Instructions:**
+        - In Copilot Chat, prompt:  
+          ```
+          Based on the summarized style rules, generate a concise .copilot-instructions.md file that guides Copilot to produce code matching these standards. Include only the most important and actionable rules.
+          ```
+        - Review and refine the generated instructions.
+    3. **Create the Instructions File:**
+        - Create a `.github` folder in your project root if it doesn’t exist.
+        - Add a `.copilot-instructions.md` file with the generated content.
+    4. **Explain the Rationale:**
+        - Note: By providing Copilot with your style guide, you help ensure that generated code is consistent with your project’s standards, reducing the need for manual reformatting or linting fixes.
+
+### Exercise 3.7: Customizing Copilot with Shared Instructions
 
 * **Purpose:** Influence Copilot generation via `.github/copilot-instructions.md`.
 * **Aim:** Define instruction, observe effect.
+* **🤖 Recommended Model:** Claude Sonnet 3.5 for creating instructions, GPT-4.1 for applying them - Instructions creation requires reasoning, application is straightforward
 * **Steps:**
     1.  **Create Instruction File:**
         * In the root of your project workspace, create a folder named `.github` if it doesn't already exist.
@@ -424,10 +491,11 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         * **Verify:** Did Copilot add code to get a logger using `logging.getLogger(__name__)`? Did it use appropriate logging methods like `logger.info()` and `logger.error()` or `logger.exception()` for logging, rather than `print()` statements?
         * If the instructions were picked up correctly, the generated code should follow the guideline specified in `copilot-instructions.md`. Apply the changes if they look correct and follow the instructions.
 
-### Exercise 3.7: Full Implementation Workflow (Ideate -> Spec -> Implement -> Refactor)
+### Exercise 3.8: Full Implementation Workflow (Ideate -> Spec -> Implement -> Refactor)
 
 * **Purpose:** To simulate a small feature development lifecycle using various Copilot capabilities sequentially.
 * **Aim:** Practice using Ask mode for ideation/spec, `#` file referencing for implementation guidance, and Edits mode for refinement.
+* **🤖 Recommended Model:** GPT-4.1 for ideation, Claude Sonnet 3.7 for specifications and implementation - Gradual increase in complexity
 * **Steps:**
     1.  **A. Ideate (Ask):** In Copilot Chat (Ask mode), prompt:
         ```
@@ -450,10 +518,11 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         * Open `main.py` again (or the relevant display class). Use Edits mode or Ask (`#file:docs/UnitsFeature.md #file:src/weather_cli/main.py Update the output display logic to show the temperature in the selected unit (C or F) and include the unit symbol.`) Apply changes.
     6.  **F. Refine (Edits):** Review the implemented code. Select sections that could be cleaner or more robust. Use Edits mode with prompts like "Refactor this temperature conversion logic for clarity" or "Add error handling if the --units argument is invalid."
 
-### Exercise 3.8: Reviewing Inline Chat Suggestions
+### Exercise 3.9: Reviewing Inline Chat Suggestions
 
 * **Purpose:** To practice exploring multiple code suggestions provided by Copilot's inline chat.
 * **Aim:** Use inline chat for a simple task and explicitly cycle through the different options Copilot offers.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Simple docstring generation with multiple suggestions
 * **Steps:**
     1.  Open `src/weather_cli/weather_data.py`.
     2.  Select the entire `WeatherData` class definition.
@@ -475,6 +544,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** Practice using Copilot Chat to understand runtime errors.
 * **Aim:** Use `#` file referencing and pasted stack traces to ask Copilot for insights.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Error analysis and debugging requires deeper reasoning and code understanding. Alternative: o3-mini for step-by-step logical debugging analysis
 * **Steps:**
     1.  **(Optional Setup - Induce an Error):** Modify `weather_client.py`. Find where data is extracted from the JSON response, for example, `response_data["main"]["temp"]`. Temporarily remove any error handling or default values around a potentially missing field (like `humidity` if you added it, or even `description`). Alternatively, modify a unit test's mock response to return incomplete JSON.
     2.  **Trigger the Error:** Run the application (`python -m weather_cli "London"`) or the modified unit test (`pytest tests/`) in a way that triggers the error (e.g., using a specific city or relying on the faulty mock data). You should see an error message and traceback (like `KeyError`) printed to the console/terminal.
@@ -491,6 +561,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To leverage Copilot for drafting standardized Git commit messages.
 * **Aim:** Use the `#changes` context variable to ask Copilot Chat to generate a commit message based on pending code changes.
+* **🤖 Recommended Model:** GPT-4.1 (default) - Simple commit message generation task
 * **Steps:**
     1.  **Ensure Pending Changes:** Make sure you have some uncommitted changes in your workspace (staged or unstaged), perhaps from completing previous exercises.
     2.  **Open Copilot Chat:** Navigate to the Copilot Chat view.
@@ -504,6 +575,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To use Copilot as a preliminary reviewer to identify potential areas of concern in the codebase.
 * **Aim:** Practice asking targeted questions about security and performance using `#codebase` (often works well for analysis requiring broad context).
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Comprehensive security and performance analysis requires advanced reasoning
 * **Steps:**
     1.  **Open Copilot Chat:** Navigate to the Copilot Chat view.
     2.  **Ask about Security:** Type the following prompt:
@@ -521,6 +593,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 * **Purpose:** To ask Copilot for different ways to achieve the same programming task.
 * **Aim:** Use `#selection` and `#` file referencing (interactive) to request alternatives.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Architectural alternatives and trade-off analysis requires deeper reasoning
 * **Steps:**
     1.  **Select Code:** Open `src/weather_cli/weather_client.py`. Select the block of code inside the `get_weather_from_api` method that is responsible for parsing the JSON response into the `WeatherData` object (likely involving dictionary access and WeatherData construction).
     2.  **Open Copilot Chat:** Navigate to the Copilot Chat view.
@@ -539,245 +612,255 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
 **⚠️ ADVANCED SECTION - EXPERT LEVEL ⚠️**
 
-**Goal:** Create a graphical user interface for the weather CLI application and implement comprehensive testing for it. This section involves complex multi-file changes, GUI framework integration, and advanced testing scenarios.
+**Goal:** Create a graphical user interface for the weather CLI application using a structured, enterprise-grade workflow that emphasizes planning, specifications, and iterative development with proper documentation and testing guardrails.
 
-**🤖 RECOMMENDED AGENT:** For this advanced section, it's highly recommended to use **Claude Sonnet 4** as your AI agent. Claude Sonnet 4 excels at:
-- Complex architectural decisions
-- Multi-file project transformations  
-- GUI framework integration
-- Advanced testing strategies
-- Handling intricate dependencies
+**🔄 WORKFLOW APPROACH:**
+This section follows a professional development workflow that progresses through distinct phases:
+1. **Ideation** (Ask mode) → **Requirements** (Edits mode) → **Specifications** (Agent mode) → **Implementation Planning** → **Guided Implementation**
+
+**🤖 MODEL RECOMMENDATIONS:**
+- **Planning & Ideation:** Claude Sonnet 3.7 (high power for creative thinking and architectural reasoning)
+- **Documentation & Specifications:** Claude Sonnet 4 (highest power for comprehensive analysis) - *Preview feature, may not be available to all users*
+- **Implementation:** Claude Sonnet 3.7 or 4 (highest power for code generation and codebase analysis) - *Note: Claude 4 is a preview feature*
+- **Simple Agent Tasks:** GPT-4.1 when given clear, specific instructions from higher-power model planning
 
 **Prerequisites for Section 5:**
-- Completion of Sections 1-4
+- Completion of Sections 1-4 (especially Exercise 3.5.1 for project style guidelines)
 - Strong understanding of Python GUI frameworks
 - Familiarity with testing GUI applications
 - Experience with event-driven programming
+- Understanding of TDD (Test-Driven Development) principles
 
 ---
 
-### Exercise 5.1: GUI Framework Selection and Architecture Planning (`#codebase`, Agent)
+### Exercise 5.1: Feature Ideation and Conceptualization (Ask Mode)
 
-* **Purpose:** Use an AI agent to analyze the current CLI application and recommend the best GUI framework approach.
-* **Aim:** Practice using Claude Sonnet 4 for architectural decision-making and complex project planning.
+* **Purpose:** Use Ask mode to brainstorm and conceptualize the GUI feature at a high level.
+* **Aim:** Practice using moderate-power models for creative exploration and requirement gathering.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 - Creative ideation and architectural thinking benefits from superior reasoning
 * **Steps:**
-    1.  Open the Copilot Chat view and **switch to Claude Sonnet 4** if available.
-    2.  Type the following comprehensive prompt:
+    1.  Open the Copilot Chat view in Ask mode with Claude Sonnet.
+    2.  Start broad ideation:
         ```
-        #codebase I want to create a GUI version of this weather CLI application. Please analyze the current architecture and recommend:
+        @workspace I want to add a GUI interface to this weather CLI application. Let's brainstorm the approach:
         
-        1. The most suitable GUI framework (tkinter, PyQt, Kivy, or others) considering:
-           - Ease of integration with existing code
-           - Cross-platform compatibility
-           - Testing capabilities
-           - Distribution requirements
+        1. What are the key user workflows that the GUI should support?
+        2. How should the GUI relate to the existing CLI functionality?
+        3. What are the main technical considerations for GUI framework choice?
+        4. What would be a good starting feature set for an MVP?
         
-        2. A detailed architectural plan showing:
-           - How to separate GUI logic from business logic
-           - Which existing modules need modification
-           - New modules/classes that should be created
-           - How to maintain both CLI and GUI interfaces
-        
-        3. A development roadmap with implementation phases
-        
-        4. Testing strategy for the GUI components
-        
-        Provide specific file structure recommendations and explain the rationale for each choice.
+        Keep this high-level - we're exploring concepts, not implementation details yet.
         ```
-    3.  Review the comprehensive analysis and architectural recommendations.
-    4.  Save the recommendations in a new file `docs/GUI_Architecture_Plan.md`.
+    3.  Continue the discussion to refine the concept:
+        ```
+        Based on our discussion, let's focus on a specific GUI feature to implement first. I'm thinking of a simple weather lookup window. What should be the core user experience and main technical requirements?
+        ```
+    4.  **Decision Point:** When you feel the conceptual discussion has reached a good understanding of what you want to build, proceed to the next exercise.
 
-### Exercise 5.2: GUI Implementation with Agent Assistance (`#codebase`, `/new`)
+### Exercise 5.2: Requirements Documentation (Edits Mode)
 
-* **Purpose:** Use Claude Sonnet 4 to implement the core GUI structure based on the architectural plan.
-* **Aim:** Practice complex code generation and multi-file coordination with an advanced AI agent.
+* **Purpose:** Create formal requirements documentation based on the ideation phase.
+* **Aim:** Practice using Edits mode to generate structured documentation with higher-power models.
+* **🤖 Recommended Model:** Claude Sonnet 4 - Complex documentation generation requiring comprehensive analysis (Preview feature)
 * **Steps:**
-    1.  **Create Main GUI Module:** In Copilot Chat with Claude Sonnet 4:
+    1.  Switch to Edits mode with Claude Sonnet 4.
+    2.  Create a new requirements document:
         ```
-        #codebase Based on our architectural plan in #file:docs/GUI_Architecture_Plan.md, /new Create the main GUI application module. This should include:
+        #codebase Create a comprehensive requirements document for the GUI weather application feature we discussed. Structure it as docs/GUI_Feature_Requirements.md with:
         
-        1. A main window class with weather input field and display area
-        2. Proper separation of concerns (GUI vs business logic)
-        3. Error handling for GUI-specific issues
-        4. Integration with the existing WeatherService
-        5. Responsive layout that works on different screen sizes
-        6. Loading indicators for API calls
+        1. Executive Summary
+        2. User Stories and Use Cases
+        3. Functional Requirements
+        4. Non-Functional Requirements (performance, usability, compatibility)
+        5. Technical Constraints and Dependencies
+        6. Success Criteria and Acceptance Tests
+        7. Risk Assessment and Mitigation
         
-        Use the recommended GUI framework from our plan. Include comprehensive docstrings and type hints.
+        Base this on our previous discussion and the existing codebase structure.
         ```
-    2.  **Create GUI-Specific Models:** Continue with Claude Sonnet 4:
-        ```
-        #codebase /new Create any additional GUI-specific models or controllers needed based on our architecture plan. This might include:
-        
-        1. GUI state management classes
-        2. Event handlers and callbacks
-        3. Data binding utilities
-        4. GUI-specific exception classes
-        
-        Ensure these integrate seamlessly with existing business logic.
-        ```
-    3.  **Update Project Structure:** Ask Claude Sonnet 4:
-        ```
-        #codebase Update the project structure (pyproject.toml, requirements.txt, setup.py if needed) to include the new GUI dependencies and entry points. The application should support both CLI and GUI modes.
-        ```
+    3.  Review the generated requirements document and refine as needed.
 
-### Exercise 5.3: Advanced GUI Testing Strategy (`#codebase`, `/tests`)
+### Exercise 5.3: Technical Specifications (Agent Mode)
 
-* **Purpose:** Implement comprehensive testing for GUI components using advanced testing patterns.
-* **Aim:** Practice GUI testing with Claude Sonnet 4's expertise in testing complex scenarios.
+* **Purpose:** Use Agent mode to create detailed technical specifications by analyzing the codebase.
+* **Aim:** Practice using high-power models with Agent mode for comprehensive codebase analysis and specification generation.
+* **🤖 Recommended Model:** Claude Sonnet 4 - Most complex analysis task requiring deep codebase understanding (Preview feature, fallback to Claude Sonnet 3.7). Alternative: Claude Sonnet 3.7 with thinking for step-by-step architectural analysis
 * **Steps:**
-    1.  **Create GUI Test Framework:** With Claude Sonnet 4:
+    1.  Switch to Agent mode with Claude 3.7/4.
+    2.  Generate comprehensive technical specifications:
         ```
-        #codebase /tests Create a comprehensive GUI testing framework that includes:
+        #codebase Based on the requirements in #file:docs/GUI_Feature_Requirements.md, create a detailed technical specification document docs/GUI_Technical_Specification.md. 
         
-        1. Unit tests for GUI components (widgets, layouts, event handlers)
-        2. Integration tests for GUI-to-business-logic interaction
-        3. UI automation tests that simulate user interactions
-        4. Mock strategies for API calls during GUI testing
-        5. Screenshot/visual regression testing setup
-        6. Performance tests for GUI responsiveness
+        Analyze the existing codebase thoroughly and include:
         
-        Use pytest with appropriate GUI testing plugins. Include fixtures for common test scenarios.
-        ```
-    2.  **Create Test Data and Scenarios:** Continue with:
-        ```
-        #codebase Generate comprehensive test data and scenarios for GUI testing, including:
+        1. Architecture Overview and Design Patterns
+        2. Component Design (classes, modules, interfaces)
+        3. Integration Points with Existing Code
+        4. Data Flow and State Management
+        5. Error Handling and Logging Strategy
+        6. Testing Strategy and Test Cases
+        7. File Structure and Module Organization
+        8. Dependencies and Configuration Changes
+        9. Performance Considerations
+        10. Security Considerations
         
-        1. Edge cases (empty inputs, network failures, invalid cities)
-        2. User interaction patterns (rapid clicking, keyboard navigation)
-        3. Window resizing and responsive behavior tests
-        4. Accessibility testing considerations
-        5. Cross-platform compatibility test markers
-        
-        Create test utilities that can be reused across different GUI test files.
+        Ensure the specification is implementable and follows the existing code patterns and style.
         ```
-    3.  **CI/CD Integration:** Ask Claude Sonnet 4:
-        ```
-        #codebase Create CI/CD configuration for running GUI tests in headless environments. Include:
-        
-        1. GitHub Actions workflow for automated GUI testing
-        2. Docker configuration for consistent test environments
-        3. Test result reporting and artifact collection
-        4. Separate test commands for different test types (unit, integration, UI)
-        ```
+    3.  Review the technical specification for completeness and accuracy.
 
-### Exercise 5.4: Advanced Features and Polish (`#codebase`, Edits Mode)
+### Exercise 5.4: Implementation Planning and Task Breakdown
 
-* **Purpose:** Add sophisticated GUI features with Claude Sonnet 4's assistance.
-* **Aim:** Practice implementing advanced GUI patterns and user experience improvements.
+* **Purpose:** Break down the technical specification into manageable, commit-sized iterations.
+* **Aim:** Practice creating detailed implementation plans that support incremental development.
+* **🤖 Recommended Model:** Claude Sonnet 4 or 3.7 - Complex planning requiring understanding of dependencies and workflow optimization. Alternative: Claude Sonnet 3.7 with thinking for systematic breakdown of complex tasks
 * **Steps:**
-    1.  **Add Advanced Features:** With Claude Sonnet 4 in Edits mode:
+    1.  Continue with the high-power model in Agent mode:
         ```
-        #codebase Add these advanced GUI features to enhance user experience:
+        #codebase Based on #file:docs/GUI_Technical_Specification.md, create an implementation plan that breaks down the work into commit-sized iterations. Create docs/GUI_Implementation_Plan.md with:
         
-        1. Search history with autocomplete
-        2. Favorite cities management
-        3. Settings/preferences panel (units, refresh intervals, themes)
-        4. System tray integration for background operation
-        5. Keyboard shortcuts and hotkeys
-        6. Multi-language support framework
-        7. Weather data caching with visual indicators
-        8. Export functionality (save weather reports)
+        1. Development phases with clear milestones
+        2. Iteration breakdown (each iteration should be 1-3 hours of work)
+        3. Dependencies between iterations
+        4. Testing checkpoints for each iteration
+        5. Rollback strategies for each phase
+        6. Integration points and validation steps
         
-        Implement these features with proper error handling and user feedback.
+        Each iteration should be small enough to be completed and committed independently, allowing for incremental progress tracking.
         ```
-    2.  **Polish and Accessibility:** Continue with:
+    2.  Generate a TODO tracking document:
         ```
-        #codebase Enhance the GUI with accessibility and polish features:
+        Based on the implementation plan, create docs/GUI_Feature_TODO.md that tracks:
         
-        1. Screen reader compatibility
-        2. High contrast themes
-        3. Keyboard-only navigation
-        4. Tooltips and help system
-        5. Loading animations and progress indicators
-        6. Professional icons and styling
-        7. Responsive design for different screen sizes
-        8. Error messages with helpful suggestions
+        1. Implementation status for each iteration
+        2. Completed tasks with commit references
+        3. Current focus area
+        4. Blockers and issues
+        5. Next steps
+        
+        Format it for easy updating as work progresses.
         ```
 
-### Exercise 5.5: Comprehensive Testing and Documentation (`#codebase`, `/explain`)
+### Exercise 5.5: Establishing Implementation Guardrails
 
-* **Purpose:** Create thorough documentation and run comprehensive tests with Claude Sonnet 4.
-* **Aim:** Practice documentation generation and test execution for complex GUI applications.
+* **Purpose:** Set up proper guardrails and guidelines before starting implementation.
+* **Aim:** Practice creating comprehensive development guidelines and test frameworks.
+* **🤖 Recommended Model:** Claude Sonnet 4 or 3.7 - Complex guideline creation requiring deep understanding of best practices
 * **Steps:**
-    1.  **Generate Comprehensive Documentation:** With Claude Sonnet 4:
+    1.  **Update Project Guidelines:** Enhance the existing `.github/copilot-instructions.md`:
         ```
-        #codebase /explain Create comprehensive documentation for the GUI application including:
+        #file:.github/copilot-instructions.md #file:tests/TESTING.md #codebase 
         
-        1. User manual with screenshots
-        2. Developer guide for extending the GUI
-        3. Testing guide with examples
-        4. Troubleshooting guide for common issues
-        5. API documentation for GUI components
-        6. Deployment guide for different platforms
+        Update the copilot-instructions.md file to include GUI-specific development guidelines:
         
-        Include installation instructions for both end users and developers.
+        1. GUI framework conventions and patterns
+        2. Testing approaches for GUI components (refer to TESTING.md)
+        3. File organization for GUI modules
+        4. Error handling patterns for GUI applications
+        5. Performance considerations for GUI operations
+        6. Accessibility requirements
+        
+        Keep existing guidelines and add GUI-specific ones.
         ```
-    2.  **Run and Validate Tests:** Execute comprehensive testing:
-        ```bash
-        # Run all test suites
-        pytest tests/ -v --cov=src --cov-report=html
-        
-        # Run GUI-specific tests
-        pytest tests/gui/ -v --gui
-        
-        # Run performance tests
-        pytest tests/performance/ -v --benchmark
+    2.  **Create Agent Workflow Guidelines:** Create a new file for implementation workflow:
         ```
-    3.  **Performance Analysis:** Ask Claude Sonnet 4:
+        Create docs/Agent_Implementation_Guidelines.md with:
+        
+        1. Agent workflow and responsibilities
+        2. DO's and DON'Ts for implementation
+        3. Code review and testing checkpoints
+        4. How to reference specification and TODO files
+        5. Commit message conventions for this feature
+        6. When to pause and seek human review
+        7. TDD workflow guidelines
+        8. Integration testing procedures
+        
+        This should guide the agent during implementation without containing implementation-specific details.
         ```
-        #codebase Analyze the GUI application's performance and suggest optimizations for:
+    3.  **Set up TDD Framework:** Prepare the testing groundwork:
+        ```
+        #file:tests/TESTING.md #codebase Create initial test scaffolding for GUI components following TDD principles:
         
-        1. Startup time
-        2. Memory usage
-        3. API response handling
-        4. UI responsiveness
-        5. Resource cleanup
+        1. Test file structure for GUI components
+        2. Mock strategies for GUI testing
+        3. Fixture setup for GUI test scenarios
+        4. Test utilities and helpers
+        5. Integration test framework setup
         
-        Provide specific code improvements and monitoring suggestions.
+        Create the test files but leave test implementations for the TDD cycle during implementation.
         ```
 
-### Exercise 5.6: Distribution and Deployment (`#codebase`, Agent)
+### Exercise 5.6: Guided Agent Implementation
 
-* **Purpose:** Create distribution packages and deployment strategies with Claude Sonnet 4.
-* **Aim:** Practice application packaging and distribution for GUI applications.
+* **Purpose:** Execute the implementation using the agent with proper guidance and documentation.
+* **Aim:** Practice managing an agent through complex implementation tasks with proper guardrails.
+* **🤖 Recommended Model:** Claude Sonnet 4 for initial setup and complex decisions, GPT-4.1 for straightforward implementation tasks when given clear instructions
 * **Steps:**
-    1.  **Create Distribution Packages:** With Claude Sonnet 4:
+    1.  **Initialize Implementation Session:** Start with clear context:
         ```
-        #codebase Create distribution packages for the GUI application:
+        #codebase I'm ready to implement the GUI feature. Please review:
         
-        1. PyInstaller configuration for executable creation
-        2. Setup.py for pip installation
-        3. Docker configuration for containerized deployment
-        4. Platform-specific packages (Windows MSI, macOS DMG, Linux AppImage)
-        5. Auto-updater mechanism
+        - Technical specification: #file:docs/GUI_Technical_Specification.md
+        - Implementation plan: #file:docs/GUI_Implementation_Plan.md  
+        - Current TODO status: #file:docs/GUI_Feature_TODO.md
+        - Implementation guidelines: #file:docs/Agent_Implementation_Guidelines.md
+        - Project guidelines: #file:.github/copilot-instructions.md
         
-        Include build scripts and CI/CD automation for releases.
+        Start with the first iteration from the implementation plan. Follow TDD approach:
+        1. Create failing tests first
+        2. Implement minimal code to pass tests
+        3. Refactor and improve
+        4. Update TODO.md with progress
+        5. Suggest when to commit
+        
+        Begin with iteration 1 from the implementation plan.
         ```
-    2.  **Deployment Documentation:** Continue with:
+    2.  **Iterative Implementation:** For each iteration:
+        - Let the agent implement following TDD
+        - Review and commit after each iteration
+        - Update the TODO.md file
+        - Validate against specifications
+        - Move to next iteration only after current is complete
+    3.  **Integration Testing:** After core implementation:
         ```
-        #codebase Create deployment documentation covering:
+        Now let's run integration tests and validate the implementation against our original requirements:
         
-        1. Building executables for different platforms
-        2. Signing and notarization requirements
-        3. Distribution channels (app stores, direct download)
-        4. Update mechanisms and versioning
-        5. Rollback procedures
+        1. Test all user workflows from the requirements document
+        2. Validate non-functional requirements
+        3. Run full test suite
+        4. Check performance benchmarks
+        5. Validate against success criteria
         
-        Include troubleshooting for common deployment issues.
+        Reference: #file:docs/GUI_Feature_Requirements.md
         ```
 
----
+### Exercise 5.7: Implementation Review and Documentation
 
-**🎯 Section 5 Learning Outcomes:**
-
-After completing this advanced section with Claude Sonnet 4, you will have:
-
-- **Architectural Expertise:** Understanding of GUI application architecture and design patterns
-- **Advanced AI Collaboration:** Experience working with Claude Sonnet 4 on complex, multi-faceted projects
-- **GUI Development Skills:** Practical experience with Python GUI frameworks and best practices  
-- **Testing Mastery:** Comprehensive knowledge of GUI testing strategies and implementation
-- **Distribution Knowledge:** Understanding of application packaging and deployment processes
-- **Professional Development:** Experience with enterprise-level development workflows
-
-**Note:** This section represents a significant step up in complexity. The combination of GUI development, comprehensive testing, and deployment requires careful planning and execution. Claude Sonnet 4's advanced reasoning capabilities make it particularly well-suited for guiding you through these complex scenarios.
+* **Purpose:** Complete the feature development cycle with proper documentation and review.
+* **Aim:** Practice comprehensive feature completion and documentation.
+* **🤖 Recommended Model:** Claude Sonnet 3.7 or 4 - Comprehensive review and documentation generation requiring analytical depth (Claude 4 is a preview feature)
+* **Steps:**
+    1.  **Final Documentation Update:**
+        ```
+        #codebase Create comprehensive end-user and developer documentation for the completed GUI feature:
+        
+        1. Update README.md with GUI usage instructions
+        2. Create docs/GUI_User_Guide.md with screenshots and examples
+        3. Update docs/api_documentation.md with new GUI components
+        4. Create docs/GUI_Developer_Guide.md for future developers
+        5. Update project documentation with lessons learned
+        
+        Ensure all documentation is consistent and up-to-date.
+        ```
+    2.  **Performance and Quality Review:**
+        ```
+        Conduct a final review of the implemented GUI feature:
+        
+        1. Performance analysis and optimization recommendations
+        2. Code quality assessment
+        3. Test coverage analysis
+        4. Security review
+        5. Accessibility compliance check
+        6. Cross-platform compatibility validation
+        
+        Provide a summary report with any recommended follow-up actions.
+        ```
