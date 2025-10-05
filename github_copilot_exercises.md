@@ -8,6 +8,10 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 **Welcome to the project!** Before diving into code generation, let's use GitHub Copilot to understand the Python weather CLI application you'll be working with.
 
+> **💡 IDE-Specific Participants:** 
+> Note that `@vscode` and `@terminal` participants are exclusive to VS Code. Users of other IDEs should utilize `@workspace` and `@editor`. In JetBrains, `@workspace` is replaced by `@project`.
+
+
 1. **@workspace Participant - Project Overview**
    - Press `Ctrl+Shift+I` (or `Cmd+Shift+I`) to open Copilot Chat and select "Ask" mode
    - Ask: `@workspace Tell me about this Python weather CLI project?`
@@ -110,6 +114,15 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - VS Code will analyze your codebase and create a `.github/copilot-instructions.md` file
    - Wait for the generation process to complete
 
+> **💡 For Other IDEs (JetBrains, etc.):** If you're not using VS Code, you can create the instructions manually:
+>
+> **Generate Instructions Using Copilot**
+>    - Create the `.github` folder if it doesn't exist
+>    - Open Copilot Chat in Agent mode
+>    - Add your project's README.md and main configuration files as context
+>    - Request: `@workspace Based on the project structure and README, create a comprehensive copilot-instructions.md file that defines our coding standards, architectural patterns, and development practices`
+
+
 2. **Review the Generated Instructions**
    - Open the newly created `.github/copilot-instructions.md` file
    - Read through the generated content to understand what Copilot discovered about your project
@@ -141,6 +154,9 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ## Phase 2: Mastering Chat Commands
 
 ### Exercise 2.1: Basic Slash Commands
+
+> **For JetBrains IDE users:** The `#selection` command is not supported. Instead, open the file, select `getWeatherData()`, open inline chat and use `/explain`.
+
 
 1. **Understanding Code with `/explain`**
    - Select the `get_weather()` method in `src/weather_cli/weather_service.py`
