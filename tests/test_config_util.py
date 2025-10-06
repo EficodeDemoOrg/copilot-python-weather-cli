@@ -1,8 +1,10 @@
 """Tests for the configuration utility."""
 
 import os
+import re
 import pytest
 from unittest.mock import patch
+from urllib.parse import urlparse
 from weather_cli.config_util import ConfigUtil
 from weather_cli.exceptions import ConfigException
 
@@ -95,9 +97,17 @@ class TestConfigUtil:
         with caplog.at_level("DEBUG"):
             ConfigUtil.get_api_base_url()
 
-        # Check that the URL is mentioned in log messages
+        # Parse the expected URL to extract and validate hostname
+        parsed_url = urlparse("https://test.api.com")
+        expected_hostname = parsed_url.hostname
+
+        # Check that a URL with the expected hostname is mentioned in log messages
         log_messages = [record.message for record in caplog.records]
-        assert any("https://test.api.com" in msg for msg in log_messages)
+        assert any(
+            urlparse(url).hostname == expected_hostname
+            for msg in log_messages
+            for url in re.findall(r"https?://[^\s]+", msg)
+        )
 
     def test_default_url_logged(self, caplog):
         """Test that default API URL is logged in debug messages."""
