@@ -8,10 +8,6 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 **Welcome to the project!** Before diving into code generation, let's use GitHub Copilot to understand the Python weather CLI application you'll be working with.
 
-> **💡 IDE-Specific Participants:** 
-> Note that `@vscode` and `@terminal` participants are exclusive to VS Code. Users of other IDEs should utilize `@workspace` and `@editor`. In JetBrains, `@workspace` is replaced by `@project`.
-
-
 1. **@workspace Participant - Project Overview**
    - Press `Ctrl+Shift+I` (or `Cmd+Shift+I`) to open Copilot Chat and select "Ask" mode
    - Ask: `@workspace Tell me about this Python weather CLI project?`
@@ -42,7 +38,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Position your cursor at the end of the file and press Enter
    - Type `# Method to check if weather is considered severe` and press Enter
    - Watch Copilot suggest a method implementation
-   - Try accepting the suggestion with `Tab`, or cycle through alternatives with `Alt+]` and `Alt+[`
+   - Try accepting the suggestion with `Tab`.
 
 2. **Practice with Comments**
    - Add this comment: `# Calculate temperature difference from average for the season`
@@ -60,11 +56,11 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 1. **Navigation Practice**
    - Open `src/weather_cli/config_util.py`
    - Add a comment: `# Validate API key format using regex`
-   - Use `Alt+]` to cycle through different suggestions
-   - Use `Ctrl+Enter` to open the suggestions panel for more options
+   - Hover mouse over the suggestion to see alternative suggestions
+   - Press `tab` to accept a suggestion
 
 2. **Partial Acceptance**
-   - Start typing a function and accept only part of a suggestion using `Ctrl+→`
+   - Start typing a function and accept only part of a suggestion using `Ctrl+→` or `Cmd+→`
    - Try modifying the suggestion before accepting it
 
 **Learning Goal:** Master the Copilot interface and keyboard shortcuts.
@@ -97,12 +93,6 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Request: "Add input validation to this method"
    - Observe how Edit mode focuses on direct code changes
 
-   > - Alternatively if #selection is not supported in your IDE:
-   >   - Switch to edit mode
-   >   - Provide file as context
-   >   - Prompt: "Add input validation to the setStatus method in Task.php"
-
-
 3. **Agent Mode with /new**
    - Type: `/new Create a simple Python utility class for temperature conversions`
    - Notice how Agent mode creates complete new implementations
@@ -119,15 +109,6 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Click on the gear icon and select **"Generate Instructions for Copilot"**
    - VS Code will analyze your codebase and create a `.github/copilot-instructions.md` file
    - Wait for the generation process to complete
-
-> **💡 For Other IDEs (JetBrains, etc.):** If you're not using VS Code, you can create the instructions manually:
->
-> **Generate Instructions Using Copilot**
->    - Create the `.github` folder if it doesn't exist
->    - Open Copilot Chat in Agent mode
->    - Add your project's README.md and main configuration files as context
->    - Request: `@workspace Based on the project structure and README, create a comprehensive copilot-instructions.md file that defines our coding standards, architectural patterns, and development practices`
-
 
 2. **Review the Generated Instructions**
    - Open the newly created `.github/copilot-instructions.md` file
@@ -160,9 +141,6 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ## Phase 2: Mastering Chat Commands
 
 ### Exercise 2.1: Basic Slash Commands
-
-> **For JetBrains IDE users:** The `#selection` command is not supported. Instead, open the file, select `getWeatherData()`, open inline chat and use `/explain`.
-
 
 1. **Understanding Code with `/explain`**
    - Select the `get_weather()` method in `src/weather_cli/weather_service.py`
@@ -280,12 +258,13 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ### Exercise 5.1: Feature Development Guidance
 
 1. **Planning New Features**
-   - "I want to add weather alerts functionality. How should I implement this feature?"
-   - "Walk me through adding multiple weather data sources to this application"
-   - "How would I add weather history tracking without breaking existing functionality?"
+   - Open Copilot Chat in Ask mode
+   - `I want to add weather alerts functionality. How should I implement this feature?`
+   - `Walk me through adding multiple weather data sources to this application`
+   - `How would I add weather history tracking without breaking existing functionality?`
 
 2. **Implementation Guidance**
-   - Ask: "Show me step-by-step how to add temperature unit conversion"
+   - Ask: `Show me step-by-step how to add temperature unit conversion`
    - Request code examples for each step
    - Ask for configuration strategies for API keys and settings
 
@@ -294,12 +273,13 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ### Exercise 5.2: Debugging and Problem Solving
 
 1. **Common Issues**
-   - Ask: "What could cause the weather API requests to fail silently?"
-   - Request: "How should I debug API connection and timeout issues?"
+   - Open Copilot Chat in Ask mode
+   - Ask: `What could cause the weather API requests to fail silently?`
+   - Request: `How should I debug API connection and timeout issues?`
 
 2. **Error Handling Improvements**
-   - Ask: "How can I improve error handling throughout this weather CLI application?"
-   - Request: "Show me best practices for logging in Python CLI applications"
+   - Ask: `How can I improve error handling throughout this weather CLI application?`
+   - Request: `Show me best practices for logging in Python CLI applications`
 
 **Learning Goal:** Develop debugging skills for Python CLI applications with Copilot assistance.
 
@@ -310,27 +290,29 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ### Exercise 6.1: Security-Focused Reviews
 
 1. **Security Agent Role**
-   - "Act as a security expert and review the configuration handling in src/weather_cli/config_util.py"
-   - "As a security specialist, what vulnerabilities do you see in the API client?"
-   - "From a security perspective, how should I improve the API key management?"
+   - Open Copilot Chat
+   - `Act as a security expert and review the configuration handling in src/weather_cli/config_util.py`
+   - `As a security specialist, what vulnerabilities do you see in the API client?`
+   - `From a security perspective, how should I improve the API key management?`
 
 2. **Security Best Practices**
-   - "What security issues should I check for in this CLI application?"
-   - "Provide specific security improvements for API key and sensitive data handling"
+   - `What security issues should I check for in this CLI application?`
+   - `Provide specific security improvements for API key and sensitive data handling`
 
 **Learning Goal:** Learn to use Copilot for security-focused code reviews in Python CLI applications.
 
 ### Exercise 6.2: Performance and Code Quality
 
 1. **Performance Expert Role**
-   - "As a performance expert, analyze the efficiency of src/weather_cli/weather_service.py"
-   - "How can I optimize the API request handling and response processing?"
+   - Open Copilot Chat
+   - `As a performance expert, analyze the efficiency of WeatherService.py`
+   - `How can I optimize the HTTP requests and JSON parsing?`
 
 2. **Code Quality Reviewer**
-   - "Act as a senior Python developer and review the code quality in the weather_cli package"
-   - "What Python coding standards and best practices should I implement in this codebase?"
+   - `Act as a senior Python developer and review the code quality in the src/weather_cli directory`
+   - `What Python coding standards and best practices should I implement in this codebase?`
 
-**Learning Goal:** Understand how different expert perspectives can improve your Python code.
+**Learning Goal:** Understand how different expert perspectives can improve your code.
 
 ---
 
@@ -340,21 +322,21 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 1. **Minimal vs. Maximum Context**
    - Ask the same question with different context levels:
-     - Minimal: "How do I add validation?"
-     - Medium: "How do I add validation to #file?"  
-     - Maximum: "@workspace #codebase How do I add consistent validation across all controllers following the existing patterns?"
+     - Minimal: `How do I add validation?`
+     - Medium: `How do I add validation to #file?`
+     - Maximum: `@workspace #codebase How do I add consistent validation across all controllers following the existing patterns?`
    - Compare response quality and relevance
 
 2. **Context Layering Technique**
-   - Start broad: "@workspace What's the error handling strategy?"
-   - Layer specific: "#file How does this service handle exceptions?"
-   - Drill down: "#selection Improve this error handling logic"
+   - Start broad: `@workspace What's the error handling strategy?`
+   - Layer specific: `#file How does this service handle exceptions?`
+   - Drill down: `#selection Improve this error handling logic`
    - Notice how each layer builds understanding
 
 3. **Cross-Reference Optimization**
-   - Use multiple file references: "Compare error handling approaches in weather_service.py vs weather_client.py"
-   - Combine selection with file context: "How does #selection relate to patterns in #file?"
-   - Mix variables effectively: "#codebase #selection Where else is this pattern used?"
+   - Use multiple file references: `Compare error handling approaches in weather_service.py vs weather_client.py`
+   - Combine selection with file context: `How does #selection relate to patterns in #file?`
+   - Mix variables effectively: `#codebase #selection Where else is this pattern used?`
 
 ### Exercise 7.2: Context Quality Assessment  
 1. **Response Quality Testing**
@@ -374,19 +356,19 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 1. **Scenario: Adding Weather Alert Notifications - A Multi-Model Workflow**
    
    **Step 1: Analysis with oX**
-   - Switch to oX model and ask: "Looking at the current weather CLI structure in this project, what would be the architectural implications of adding weather alert notifications? What potential issues should I consider?"
-   - Follow up with: "Based on the existing WeatherService and WeatherData model, what's the most logical way to integrate alert functionality without breaking current functionality?"
-   
+   - Switch to oX model and ask: `Looking at the current weather CLI structure in this project, what would be the architectural implications of adding weather alert notifications? What potential issues should I consider?`
+   - Follow up with: `Based on the existing WeatherService and WeatherData model, what's the most logical way to integrate alert functionality without breaking current functionality?`
+
    **Step 2: Implementation with Sonnet 4**
-   - Switch to Sonnet 4 and say: "Based on the analysis above, generate the code changes needed to add weather alert functionality to the weather CLI. Include alert threshold validation and notification methods."
-   - Then: "Now generate the corresponding service changes to handle alert checking and triggering."
+   - Switch to Sonnet 4 and say: `Based on the analysis above, generate the code changes needed to add weather alert functionality to the weather CLI. Include alert threshold validation and notification methods.`
+   - Then: `Now generate the corresponding service changes to handle alert checking and triggering.`
    
    **Step 3: Documentation and Git Summary with GPT-4.1/5-mini**
-   - Switch to GPT-4.1/5-mini and request: "Get the current git status and create a summary of what files would be changed for this weather alert feature."
-   - Follow with: "Generate a concise commit message and brief documentation for these weather alert changes."
-   
+   - Switch to GPT-4.1/5-mini and request: `Get the current git status and create a summary of what files would be changed for this weather alert feature.`
+   - Follow with: `Generate a concise commit message and brief documentation for these weather alert changes.`
+
    **Step 4: Validation Back to oX**
-   - Return to oX and ask: "Review the generated code changes. Are there any logical flaws or edge cases I should address before implementing?"
+   - Return to oX and ask: `Review the generated code changes. Are there any logical flaws or edge cases I should address before implementing?`
 
 2. **Reflect on the Multi-Model Experience**
    - Compare how each model approached their specialized task
@@ -454,24 +436,24 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ### Exercise 9.1: Code Refactoring Challenges
 
 1. **Refactoring Scenarios**
-   - "How would you refactor the WeatherService to use dependency injection patterns?"
-   - "Show me how to implement the Repository pattern for weather data access"
+   - `How would you refactor the WeatherService to use dependency injection patterns?`
+   - `Show me how to implement the Repository pattern for weather data access.`
 
 2. **Design Pattern Implementation**
-   - "How could I implement the Observer pattern for weather condition changes?"
-   - "Show me how to add a Factory pattern for creating different weather data sources"
+   - `How could I implement the Observer pattern for weather condition changes?`
+   - `Show me how to add a Factory pattern for creating different weather data sources.`
 
 **Learning Goal:** Explore advanced Python programming concepts with Copilot's guidance.
 
 ### Exercise 9.2: Alternative Implementations
 
 1. **Different Approaches**
-   - "Show me 3 different ways to implement weather data caching"
-   - "What are alternative approaches to API client configuration management?"
+   - `Show me 3 different ways to implement weather data caching.`
+   - `What are alternative approaches to API client configuration management?`
 
 2. **Technology Comparisons**
-   - "How would this application look if built with Click framework instead of argparse?"
-   - "Compare this implementation with an async/await approach using aiohttp"
+   - `How would this application look if built with Click framework instead of argparse?`
+   - `Compare this implementation with an async/await approach using aiohttp.`
 
 **Learning Goal:** Understand different Python implementation strategies and trade-offs.
 
@@ -483,20 +465,20 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Open two separate Copilot chat windows/threads for this exercise
    
    **Thread 1: Lead Developer Role**
-   - In the first chat, establish the role: "Act as a Lead Python Developer. You are responsible for architectural decisions, code reviews, and ensuring best practices."
-   - Ask: "I need to add weather data persistence to this CLI application. What's the overall architecture and implementation strategy you recommend?"
-   - Follow up: "Create a detailed implementation plan with data storage considerations and caching strategies."
+   - In the first chat, establish the role: `Act as a Lead Python Developer. You are responsible for architectural decisions, code reviews, and ensuring best practices.`
+   - Ask: `I need to add weather data persistence to this CLI application. What's the overall architecture and implementation strategy you recommend?`
+   - Follow up: `Create a detailed implementation plan with data storage considerations and caching strategies.`
    - Use the planning chatmode and prompts from `.github/chatmodes/Plan.chatmode.md` if available.
    
    **Thread 2: Tester/Implementer Role**
-   - In the second chat, establish the role: "Act as a Python Tester/Implementer. You focus on writing code, creating tests, and ensuring implementation quality."
-   - Share the plan from Thread 1 and ask: "Based on this persistence plan, implement the data storage model and caching functionality."
-   - Request: "Generate comprehensive pytest tests for the weather data persistence system."
+   - In the second chat, establish the role: `Act as a Python Tester/Implementer. You focus on writing code, creating tests, and ensuring implementation quality.`
+   - Share the plan from Thread 1 and ask: `Based on this persistence plan, implement the data storage model and caching functionality.`
+   - Request: `Generate comprehensive pytest tests for the weather data persistence system.`
    - Use implementation chatmode from `.github/chatmodes/Implement.chatmode.md` if available.
 
 2. **Cross-Thread Collaboration**
    - Take the implementation from Thread 2 back to Thread 1 (Lead Developer) for code review
-   - Ask the Lead Developer: "Review this weather data persistence implementation. What improvements or performance concerns do you see?"
+   - Ask the Lead Developer: `Review this weather data persistence implementation. What improvements or performance concerns do you see?`
    - Bring the feedback back to Thread 2 (Tester/Implementer) to refine the code
    - Continue this back-and-forth until both roles approve the solution
 
