@@ -91,7 +91,7 @@ def test_get_weather_success(self, mock_get):
     assert result.city == "London"
 ```
 
-**Run tests**: `PYTHONPATH=src pytest --cov=weather_cli tests/` (PYTHONPATH required for imports)
+**Run tests**: `pytest --cov=weather_cli tests/`
 
 ## Code Quality Gate (All Must Pass)
 
@@ -99,7 +99,7 @@ def test_get_weather_success(self, mock_get):
 black src tests          # Format (line length: 100)
 flake8 src tests         # Lint (max-line-length = 100)
 mypy src                 # Type check (strict mode)
-PYTHONPATH=src pytest --cov=weather_cli tests/  # Tests + coverage
+pytest --cov=weather_cli tests/  # Tests + coverage
 ```
 
 **Line length**: 100 chars max (configured in `pyproject.toml`)
@@ -142,11 +142,13 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-**Installation**:
+**Installation** (editable mode for development):
 ```bash
-pip install -r requirements.txt       # Runtime deps (requests, python-dotenv)
+pip install -e .                      # Install package in editable mode
 pip install -r requirements-dev.txt   # Add dev tools (pytest, black, mypy, flake8)
 ```
+
+**Why editable install?** `pip install -e .` makes the `weather_cli` module importable without PYTHONPATH manipulation. Changes to source code are immediately reflected without reinstalling.
 
 **Configuration**: Create `.env` file with `OPENWEATHERMAP_API_KEY=your_key_here`
 

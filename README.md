@@ -66,19 +66,21 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-### 4. Install dependencies
+### 4. Install the package
 
-#### Recommended: Development installation (for full features, testing, linting, formatting)
+#### Recommended: Editable installation with dev tools
+
+This installs the package in "editable" mode, so code changes are immediately reflected:
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 pip install -r requirements-dev.txt
 ```
 
-#### Fallback: Basic installation (only run the app, no tests/linting/formatting)
+#### Fallback: Basic installation (no dev tools)
 
 ```bash
-pip install -r requirements.txt
+pip install .
 ```
 
 ## Usage
@@ -153,7 +155,7 @@ python-weather-cli/
 └── docs/
 ```
 
-## Development commands (if you did the development install)
+## Development commands
 
 **Important**: Activate the virtual environment first if you created one:
 ```bash
@@ -162,11 +164,11 @@ source venv/bin/activate
 
 - **Run all tests:**
   ```bash
-  PYTHONPATH=src pytest
+  pytest
   ```
 - **Run tests with coverage:**
   ```bash
-  PYTHONPATH=src pytest --cov=weather_cli tests/
+  pytest --cov=weather_cli tests/
   ```
 - **Format code with black:**
   ```bash
@@ -181,16 +183,14 @@ source venv/bin/activate
   mypy src
   ```
 
-**Note**: `PYTHONPATH=src` is required for pytest to find the `weather_cli` module during test runs.
-
 ## Testing
 
 This project includes comprehensive unit tests covering all major components and functionality. The test suite ensures reliability, security, and proper error handling across the application.
 
 **Quick testing commands:**
-- Run all tests: `PYTHONPATH=src pytest`
-- Run with coverage: `PYTHONPATH=src pytest --cov=weather_cli tests/`
-- Run specific test file: `PYTHONPATH=src pytest tests/test_weather_client.py`
+- Run all tests: `pytest`
+- Run with coverage: `pytest --cov=weather_cli tests/`
+- Run specific test file: `pytest tests/test_weather_client.py`
 
 The testing approach includes:
 - **Unit testing** with mocked dependencies for isolation
