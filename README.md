@@ -59,11 +59,19 @@ cp .env.example .env
 # OPENWEATHERMAP_API_KEY=your_api_key_here
 ```
 
-### 3. Install dependencies
+### 3. Set up virtual environment (recommended)
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 4. Install dependencies
 
 #### Recommended: Development installation (for full features, testing, linting, formatting)
 
 ```bash
+pip install -r requirements.txt
 pip install -r requirements-dev.txt
 ```
 
@@ -147,13 +155,18 @@ python-weather-cli/
 
 ## Development commands (if you did the development install)
 
+**Important**: Activate the virtual environment first if you created one:
+```bash
+source venv/bin/activate
+```
+
 - **Run all tests:**
   ```bash
-  pytest
+  PYTHONPATH=src pytest
   ```
 - **Run tests with coverage:**
   ```bash
-  pytest --cov=src
+  PYTHONPATH=src pytest --cov=weather_cli tests/
   ```
 - **Format code with black:**
   ```bash
@@ -168,14 +181,16 @@ python-weather-cli/
   mypy src
   ```
 
+**Note**: `PYTHONPATH=src` is required for pytest to find the `weather_cli` module during test runs.
+
 ## Testing
 
 This project includes comprehensive unit tests covering all major components and functionality. The test suite ensures reliability, security, and proper error handling across the application.
 
 **Quick testing commands:**
-- Run all tests: `pytest`
-- Run with coverage: `pytest --cov=src`
-- Run specific test file: `pytest tests/test_weather_client.py`
+- Run all tests: `PYTHONPATH=src pytest`
+- Run with coverage: `PYTHONPATH=src pytest --cov=weather_cli tests/`
+- Run specific test file: `PYTHONPATH=src pytest tests/test_weather_client.py`
 
 The testing approach includes:
 - **Unit testing** with mocked dependencies for isolation
