@@ -31,12 +31,12 @@ Classify completion status:
 
 ### Work Completed
 Files Created ([N] total):
-- ✅ `path/to/file1.ts` - [purpose]
-- ✅ `path/to/file2.tsx` - [purpose]
+- ✅ `src/weather_cli/new_feature.py` - [purpose]
+- ✅ `tests/test_new_feature.py` - [purpose]
 
 Files Modified ([M] total):
-- ✅ `path/to/existing.ts` - [what was changed]
-- ✅ `path/to/other.ts` - [what was changed]
+- ✅ `src/weather_cli/main.py` - [what was changed]
+- ✅ `src/weather_cli/weather_service.py` - [what was changed]
 
 ### Verification Results
 
@@ -46,9 +46,11 @@ Files Modified ([M] total):
 - ❌ [DoD item 3]: FAIL - [reason]
 
 #### Quality Checks
-- Linter Status: [PASS|FAIL with N issues]
-- Test Status: [PASS|FAIL|NOT RUN]
-- TypeScript Compilation: [PASS|FAIL]
+- black (formatter): [PASS|FAIL]
+- flake8 (linter): [PASS|FAIL with N issues]
+- mypy (type checker): [PASS|FAIL]
+- pytest (tests): [PASS|FAIL - X/Y passed]
+- Test Coverage: [X%] (target: >90%)
 
 ## Deviations from Specification
 
@@ -81,9 +83,11 @@ Files Modified ([M] total):
 ## Code Quality Notes
 
 ### Patterns Followed
-- ✅ Consistent with `path/to/example.ts` pattern
-- ✅ Follows project naming conventions
-- ✅ Maintains existing code style
+- ✅ Consistent with patterns from `copilot-instructions.md`
+- ✅ Uses dependency injection for testability
+- ✅ Dataclasses are immutable with `@dataclass(frozen=True)`
+- ✅ Complete type hints for mypy --strict
+- ✅ API keys redacted in logs (security requirement)
 
 ### Technical Debt Incurred
 [None | Or list items:]

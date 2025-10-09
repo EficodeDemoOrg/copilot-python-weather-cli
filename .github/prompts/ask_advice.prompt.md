@@ -37,7 +37,7 @@ Generate this structure:
 ### What Actually Happened
 [Describe the specific problem]
 - Error message (if any): `[exact error]`
-- File involved: `path/to/file.ts`
+- File involved: `src/weather_cli/module.py`
 - Line number: [if applicable]
 
 ## Investigation Performed

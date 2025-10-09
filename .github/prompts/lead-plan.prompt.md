@@ -105,68 +105,87 @@ required_context:
 ## Implementation Steps
 
 ### Step 1: [Specific Action]
-**File**: `src/features/[epic]/slice.ts`
+**File**: `src/weather_cli/[feature_name].py`
 **Operation**: CREATE
 
 Create new file with this content:
-```typescript
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+```python
+"""Module for [feature description]."""
+from dataclasses import dataclass
+from typing import Optional
+import logging
 
-interface FeatureState {
-  // ... specific properties from research
-}
+logger = logging.getLogger(__name__)
 
-const initialState: FeatureState = {
-  // ... from research
-};
 
-export const featureSlice = createSlice({
-  name: '[epic]',
-  initialState,
-  reducers: {
-    // ... specific reducers from research
-  }
-});
+@dataclass(frozen=True)
+class [FeatureName]Data:
+    """Immutable data class for [feature]."""
+    
+    property1: str
+    property2: float
+    
+    def __post_init__(self) -> None:
+        """Validate data on construction."""
+        if not isinstance(self.property1, str):
+            raise TypeError("property1 must be a string")
+        if not self.property1.strip():
+            raise ValueError("property1 cannot be empty")
 
-export const { actionName } = featureSlice.actions;
-export default featureSlice.reducer;
+
+class [FeatureName]Service:
+    """Service class for [feature] business logic."""
+    
+    def __init__(self, client: Optional[SomeClient] = None) -> None:
+        """Initialize with optional dependency injection for testing."""
+        self.client = client or DefaultClient()
+        logger.info("[FeatureName]Service initialized")
+    
+    def process(self, input_data: str) -> [FeatureName]Data:
+        """Process input and return feature data."""
+        # ... implementation from research
+        pass
 ```
 
 ### Step 2: [Next Specific Action]
-**File**: `src/store/index.ts`
+**File**: `src/weather_cli/main.py`
 **Operation**: MODIFY
-**Location**: Line 15 (after last reducer import)
+**Location**: Line 12 (in import section)
 
 Add import:
-```typescript
-import epicReducer from '../features/[epic]/slice';
+```python
+from weather_cli.[feature_name] import [FeatureName]Service
 ```
 
-**Location**: Line 35 (in combineReducers)
+**Location**: Line 45 (in main function, after service initialization)
 
-Add to reducers object:
-```typescript
-[epic]: epicReducer,
+Add service initialization:
+```python
+[feature_name]_service = [FeatureName]Service()
 ```
 
 ## Verification Checklist
-- [ ] File `src/features/[epic]/slice.ts` exists
-- [ ] File exports default reducer
-- [ ] Store includes `[epic]` key in root state
-- [ ] No TypeScript errors in modified files
-- [ ] Redux DevTools shows `[epic]` in state tree
+- [ ] File `src/weather_cli/[feature_name].py` exists
+- [ ] File has complete type hints (passes `mypy src`)
+- [ ] All dataclasses use `@dataclass(frozen=True)` with `__post_init__` validation
+- [ ] Services use dependency injection pattern
+- [ ] No linting errors (`flake8 src tests`)
+- [ ] Code is formatted (`black src tests`)
 
 ## Definition of Done
 - [ ] All verification items checked
-- [ ] Code follows pattern from `src/features/users/slice.ts`
-- [ ] State shape matches specification from RESEARCH.md
-- [ ] Manual test: State updates visible in Redux DevTools
+- [ ] Code follows patterns from `copilot-instructions.md`
+- [ ] Data models match specification from RESEARCH.md
+- [ ] Tests written covering happy path and error cases
+- [ ] Test coverage >90% (`pytest --cov=weather_cli tests/`)
+- [ ] API keys are redacted in logs (security requirement)
 
 ## Troubleshooting
-If TypeScript errors occur:
-1. Check import paths are relative
-2. Verify type exports from slice
-3. Ensure RootState type is updated
+If type checking errors occur:
+1. Ensure all functions have complete type hints
+2. Use `Optional[T]` for nullable types
+3. Check imports are absolute (e.g., `from weather_cli.module import Class`)
+4. Verify return types match function signatures
 
 ## Context Note
 This task intentionally isolated to just state management.
@@ -188,19 +207,26 @@ Generated: [Date]
 ## Task List
 | # | File | Purpose | Context Budget |
 |---|------|---------|----------------|
-| 01 | `tasks/01_create_structure.md` | Set up directories | 5k |
-| 02 | `tasks/02_implement_state.md` | Redux slice | 10k |
+| 01 | `tasks/01_create_data_model.md` | Create dataclasses | 5k |
+| 02 | `tasks/02_implement_service.md` | Business logic layer | 10k |
+| 03 | `tasks/03_add_tests.md` | Unit tests with mocks | 8k |
 [...]
 
 ## Execution Instructions
-1. Execute tasks in numerical order
-2. Verify each task's DoD before proceeding
-3. If a task fails, stop and report
+1. Activate virtual environment: `source venv/bin/activate`
+2. Execute tasks in numerical order
+3. Run code quality gate after each task:
+   - `black src tests` (format)
+   - `flake8 src tests` (lint)
+   - `mypy src` (type check)
+   - `pytest --cov=weather_cli tests/` (tests)
+4. Verify each task's DoD before proceeding
+5. If a task fails, stop and report
 
 ## Deliverables
 Upon completion, these files will exist:
-- `src/features/[epic]/` (directory structure)
-- `src/features/[epic]/slice.ts` (state management)
+- `src/weather_cli/[feature_name].py` (feature implementation)
+- `tests/test_[feature_name].py` (unit tests with >90% coverage)
 - [List all expected files]
 
 STATUS: Planning complete. [N] tasks ready for implementation.

@@ -42,12 +42,12 @@ Objective: [One sentence from task]
 
 I will:
 1. CREATE these files:
-   - path/to/new/file1.ts
-   - path/to/new/file2.ts
+   - src/weather_cli/new_feature.py
+   - tests/test_new_feature.py
 
 2. MODIFY these files:
-   - path/to/existing/file.ts (add imports)
-   - path/to/other/file.ts (register component)
+   - src/weather_cli/main.py (add imports and CLI arguments)
+   - src/weather_cli/weather_service.py (add new method)
 
 3. VERIFY by:
    - [Verification item 1]
@@ -92,26 +92,46 @@ Need guidance. Using /ask_advice...
 
 # PHASE 3: VERIFICATION
 
-## Step 1: Run Linter
+## Step 1: Activate Virtual Environment
 ```bash
-# For TypeScript/JavaScript projects
-npx eslint [modified files]
-
-# For Python projects  
-pylint [modified files]
+# Ensure venv is activated before running any commands
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-If linter fails:
+## Step 2: Run Code Quality Checks
+Run all quality gates in order:
+
+```bash
+# Format code (auto-fixes)
+black src tests
+
+# Lint (check code style and errors)
+flake8 src tests
+
+# Type check (strict mode)
+mypy src
+```
+
+If linter/type checker fails:
 1. Fix issues if trivial (formatting, simple imports)
 2. Document if complex (would change task logic)
 
-## Step 2: Run Tests
+## Step 3: Run Tests
 ```bash
-# Run tests related to modified files
-npm test -- [test files]
+# Run all tests with coverage
+pytest --cov=weather_cli tests/
+
+# Or run specific test file
+pytest tests/test_<name>.py
 ```
 
-## Step 3: Check Definition of Done
+Tests should verify:
+- ✅ Happy path (successful execution)
+- ✅ All error paths (network errors, invalid inputs, API errors)
+- ✅ Input validation edge cases
+- ✅ Security (API keys never logged)
+
+## Step 4: Check Definition of Done
 For each DoD item in task:
 ```
 ✅ [Item]: COMPLETE - [Evidence]
@@ -135,12 +155,12 @@ Task: [Task file name]
 Status: ✅ SUCCESS | ⚠️ PARTIAL | ❌ BLOCKED
 
 Files Created (N):
-- path/to/file1.ts
-- path/to/file2.ts
+- src/weather_cli/new_feature.py
+- tests/test_new_feature.py
 
 Files Modified (M):  
-- path/to/existing.ts (added imports)
-- path/to/other.ts (registered component)
+- src/weather_cli/main.py (added CLI arguments)
+- src/weather_cli/weather_service.py (added new method)
 
 Verification Results:
 - ✅ Linter: PASS

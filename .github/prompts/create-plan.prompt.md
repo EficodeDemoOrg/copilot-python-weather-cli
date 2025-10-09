@@ -59,11 +59,11 @@ Each task file you generate must strictly follow this structure:
 
 ## Files to Modify
 *A list of file paths to be created or edited in this task.*
-- `/path/to/file/to/be/modified.js`
-- `/path/to/new/file/to/create.css`
+- `src/weather_cli/feature_module.py`
+- `tests/test_feature_module.py`
 
 ## Instructions
 *A numbered list of precise, unambiguous steps for the Implementer to follow.*
-1.  In `/path/to/file/to/be/modified.js`, add the following function...
-2.  Create a new file `/path/to/new/file/to/create.css` with the following content...
+1.  In `src/weather_cli/feature_module.py`, add the following class with type hints...
+2.  Create a new file `tests/test_feature_module.py` with the following test cases...
 ```

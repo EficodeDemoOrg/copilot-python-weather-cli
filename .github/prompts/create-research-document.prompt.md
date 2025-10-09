@@ -41,12 +41,14 @@ You are **The Researcher**. Your task is to consolidate all findings from our re
 *Pointers to specific locations in the codebase that are essential for the Planner.*
 
 ### 3.1. Primary Files of Interest
--   `/path/to/relevant/file1.js`
--   `/path/to/another/important_file.py`
+-   `src/weather_cli/weather_service.py`
+-   `src/weather_cli/weather_client.py`
+-   `src/weather_cli/weather_data.py`
 
 ### 3.2. Key Functions / Classes / Components
--   `functionName()` in `file1.js`: [Brief description of its relevance.]
--   `ClassName` in `important_file.py`: [Brief description of its relevance.]
+-   `WeatherService` in `weather_service.py`: [Brief description of its relevance.]
+-   `OpenWeatherMapClient` in `weather_client.py`: [Brief description of its relevance.]
+-   `WeatherData` dataclass in `weather_data.py`: [Brief description of its relevance.]
 
 ## 4. External Dependencies & Documentation
 *A list of all external APIs, libraries, or other systems that are relevant.*
@@ -55,8 +57,9 @@ You are **The Researcher**. Your task is to consolidate all findings from our re
 
 ## 5. Tooling & Environment
 *A list of specific tools, servers, or commands available that can aid in planning and implementation.*
--   **MCP Staging Server:** A deployment environment for testing branches is available via the `mcp-cli` tool. The plan should include a step to deploy and verify changes here.
--   **Component Library Storybook:** Use `npm run storybook` to view and test UI components in isolation.
+-   **Virtual Environment:** Python virtual environment must be activated with `source venv/bin/activate` before running any commands.
+-   **Code Quality Gate:** All code must pass: `black src tests`, `flake8 src tests`, `mypy src`, `pytest --cov=weather_cli tests/`
+-   **Testing:** Unit tests use pytest with mocking to avoid real API calls. Test coverage must be >90%.
 
 ## 6. Open Questions & Risks
 *A bulleted list of any remaining ambiguities or potential risks that the Planner should be aware of.*

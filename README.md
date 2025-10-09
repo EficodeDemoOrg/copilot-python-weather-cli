@@ -187,7 +187,7 @@ source venv/bin/activate
 
 This project includes comprehensive unit tests covering all major components and functionality. The test suite ensures reliability, security, and proper error handling across the application.
 
-**Quick testing commands:**
+**Quick testing commands** (remember to activate venv first: `source venv/bin/activate`):
 - Run all tests: `pytest`
 - Run with coverage: `pytest --cov=weather_cli tests/`
 - Run specific test file: `pytest tests/test_weather_client.py`
