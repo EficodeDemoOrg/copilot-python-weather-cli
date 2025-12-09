@@ -1,0 +1,13 @@
+name: compliance-rules
+version: 1.0.0
+description: Corporate compliance and legal guidelines for AI development
+author: Legal & Compliance Team
+
+scripts:
+  start: "codex --skip-git-repo-check legal-review.prompt.md"
+  audit: "codex --skip-git-repo-check compliance-audit.prompt.md"
+  gdpr-check: "codex --skip-git-repo-check gdpr-assessment.prompt.md"
+
+dependencies:
+  mcp:
+    - io.github.github/github-mcp-server

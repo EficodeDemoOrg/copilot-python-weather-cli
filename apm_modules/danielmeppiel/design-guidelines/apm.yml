@@ -1,0 +1,13 @@
+name: design-guidelines
+version: 1.0.0
+description: UI/UX design standards and accessibility guidelines for development teams
+author: Design & UX Team
+
+scripts:
+  start: "codex --skip-git-repo-check design-review.prompt.md"
+  accessibility: "codex --skip-git-repo-check accessibility-audit.prompt.md"
+  style-guide: "codex --skip-git-repo-check style-guide-check.prompt.md"
+
+dependencies:
+  mcp:
+    - io.github.github/github-mcp-server
