@@ -136,12 +136,12 @@ Once approved, the Implementer will:
 - Execute tests with `pytest` if applicable
 - Report completion status
 
-#### Step 2.2: Handle Implementation Issues
+#### Part 2.2: Handle Implementation Issues
 
 **If the task succeeds:**
 - Review the code changes
 - Verify type hints follow Python 3.10+ standards
-- Move to the next task (repeat Step 6 with `02_[task_name].md`)
+- Move to the next task (repeat Part 2.1 with `02_[task_name].md`)
 
 **If verification fails:**
 - Read the Implementer's explanation
@@ -160,9 +160,9 @@ You can:
 - Modify the task specification
 - Abort and go back to Lead Developer for task revision
 
-#### Step 2.3: Complete Remaining Tasks
+#### Part 2.3: Complete Remaining Tasks
 
-Repeat Step 2.2 for each task file in sequence (02, 03, etc.) until all tasks in the epic are complete.
+Repeat Part 2.1 for each task file in sequence (02, 03, etc.) until all tasks in the epic are complete.
 
 **Important:** Each task should be run in a fresh Implementer session with just that task file as context.
 
