@@ -1,5 +1,5 @@
 ---
-mode: Lead Developer
+agent: Lead Developer
 description: "Create detailed implementation plan and context-efficient tasks"
 ---
 Transform research into executable tasks optimized for limited context windows.

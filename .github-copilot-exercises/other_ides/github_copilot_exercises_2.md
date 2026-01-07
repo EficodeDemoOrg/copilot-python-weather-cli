@@ -2,16 +2,16 @@
 
 Welcome to Session 2! You'll now dive into advanced agent-based development workflows. These exercises implement a structured approach focusing on **multi-agent collaboration** and **complex feature implementation**.
 
-> **💡 About Custom Chatmodes**
+> **💡 About Custom Agents**
 >
-> Other IDEs will eventually support custom chatmodes similar to VS Code, allowing you to save and reuse agent configurations. For now, we'll manually prime agents with specific roles and instructions using reusable prompt files. This approach teaches you valuable prompt engineering skills and gives you full control over agent behavior.
+> JetBrains IDEs now support custom agents similar to VS Code! You can create specialized agent personas by defining `.agent.md` files in the `.github/agents/` directory. These agents appear in the agent picker dropdown alongside built-in agents (Ask, Edit, Agent, Plan).
 >
 > **What this means for you:**
-> - You'll use **agent priming prompts** to define roles (Lead Developer, Implementer, QA Agent)
-> - You'll store reusable prompts in `.github/prompts/` as `.prompt.md` files
-> - For Visual Studio, you'll reference them using `#prompt:custom_prompt_name` in Copilot Chat
-> - For JetBrains, you'll reference them using `/custom_prompt_name` in Copilot Chat
-> - Each new chat session requires manual role definition
+> - Create **custom agents** in `.github/agents/` as `.agent.md` files
+> - Each agent defines a specialized role (Lead Developer, Implementer, QA Specialist)
+> - Select agents from the **agent picker dropdown** in Copilot Chat
+> - Agents maintain their role and instructions throughout the chat session
+> - You can also use **reusable prompt files** (`.prompt.md`) in `.github/prompts/` for specific commands
 
 ## Model Recommendations
 
@@ -54,78 +54,59 @@ You've been tasked with adding a complete weather history and analytics system t
 
 **Deliverable:** Create a `docs/REQUIREMENT-ANALYSIS.md` file documenting all findings, challenges, and recommendations.
 
-#### Part 1.2: Lead Developer Planning Agent
+#### Part 1.2: Strategic Planning with Plan Agent
 
-**Understanding Agent Priming:**
-Since other IDEs than VS Code doesn't yet have fully automatic custom chatmodes, you'll manually prime the agent with a specific role. This means starting each chat session by telling Copilot what role to play and what rules to follow.
+1. **Create High-Level Implementation Strategy**
+   - Start a fresh Copilot Chat session
+   - Select **Plan** from the agent picker
+   - Attach the `docs/REQUIREMENT-ANALYSIS.md` file as context
+   - Request: `Create a strategic plan for implementing weather data persistence in this application. Break down the work into logical phases and identify dependencies.`
 
-1. **Create the Lead Developer Prompt File**
-   - Create `.github/prompts/custom_lead-plan.prompt.md` with the following content:
+   **The Plan agent will:**
+   - Analyze the requirements and create a high-level implementation strategy
+   - Identify major phases of work (e.g., data models, persistence layer, service integration, CLI updates)
+   - Suggest the order of implementation
+   - Highlight potential risks and dependencies
 
-```markdown
-You are a Lead Python Developer responsible for architectural decisions, code reviews, and ensuring best practices.
+2. **Review and Refine the Strategy**
+   - Review the strategic plan provided by the Plan agent
+   - Ask follow-up questions to clarify any ambiguous areas
+   - Request: `What are the critical milestones for this implementation?`
+   - Ask: `What would be a good MVP (Minimum Viable Product) for this feature?`
 
-Your task is to create a detailed implementation plan based on the provided requirements analysis or test analysis.
+**Deliverable:** Document the strategic plan in `docs/epic_weather_analytics/STRATEGIC_PLAN.md`
 
-Follow this process:
-1. Read and understand the requirements analysis or test analysis document
-2. Break down the work into small, sequential, numbered tasks
-3. Each task should be completable in one development session
-4. Create the following deliverables:
-   - `docs/epic_[name]/plans/IMPLEMENTATION_PLAN.md` - Overall strategy and approach
-   - `docs/epic_[name]/plans/DECISION_LOG.md` - Key architectural decisions
-   - `docs/epic_[name]/tasks/01_[task_name].md` - First task with clear goals and acceptance criteria
-   - `docs/epic_[name]/tasks/02_[task_name].md` - Second task, and so on
-   - `docs/epic_[name]/MANIFEST.md` - List of all generated files
+#### Part 1.3: Detailed Task Planning with Lead Developer Agent
 
-Task File Format:
-- Title: Clear, actionable task name
-- Goal: What this task accomplishes
-- Context: Files and components involved
-- Acceptance Criteria: How to verify completion
-- Implementation Notes: Technical guidance
-- Use absolute paths from project root (not placeholders)
+1. **Convert Strategy into Executable Tasks**
+   - Start a fresh Copilot Chat session
+   - In the chat interface, locate the agent picker dropdown
+   - Select **"Lead Developer"** custom agent from the picker
+   - Attach both `REQUIREMENT-ANALYSIS.md` and `STRATEGIC_PLAN.md` as context
+   - Use the reusable prompt: `/lead-plan`
 
-Plan Requirements:
-- Focus on Python 3.10+, pytest for testing, and Python best practices
-- Each task must be independent (no blocking dependencies)
-- Number tasks sequentially (01, 02, 03...)
-- Keep tasks small and focused
-- Follow existing project structure in src/weather_cli/
-- Use descriptive module, class, and function names
-- Consider integration with existing modules: weather_service.py, weather_data.py, weather_client.py, main.py
+   **The Lead Developer will:**
+   - Convert the strategic plan into detailed, actionable tasks
+   - Generate numbered task files (01_task_name.md, 02_task_name.md, etc.)
+   - Document technical decisions in a decision log
+   - Create a task manifest
 
-Epic name will be provided. Generate all files with proper structure.
-```
+   **Task numbering:** Tasks are numbered sequentially (01, 02, 03...) to enforce execution order. Each task is designed to be completed without blocking on others.
 
-2. **Use the Lead Developer Prompt**
-   - Start a **new Copilot Chat session**
-   - Reference the prompt file: `#prompt:custom_lead-plan`
-      - Or For JetBrains: `/custom_lead-plan`
-   - Add your requirements file: `#file:docs/REQUIREMENT-ANALYSIS.md`
-   - Provide the epic name: "The epic name is 'weather_analytics'. Create the implementation plan."
-
-3. **Review the Generated Plan**
-    - The agent will create a new epic in `docs/epic_weather_analytics/` containing:
-       - `plans/IMPLEMENTATION_PLAN.md`: The overall strategy
-       - `plans/DECISION_LOG.md`: Key decisions and rationale
-       - `tasks/01_[name].md`, `tasks/02_[name].md`, etc.: Sequenced tasks
-       - `MANIFEST.md`: A manifest of all generated files
-
-   **Your responsibility:**
+2. **Review the Detailed Plan**
    - Read each task file to ensure it makes sense
    - Verify tasks are small enough (each should be completable in one session)
    - Check that file paths use project root (`/`) not placeholders
-   - Ensure tasks follow Python 3.10+ standards, project code style, and testing conventions (Black, flake8, mypy, pytest)
+   - Ensure tasks align with the strategic plan from Part 1.2
 
-**Deliverable:**
-    - Output files in `docs/epic_weather_analytics/`:
-       - `plans/IMPLEMENTATION_PLAN.md`
-       - `plans/DECISION_LOG.md`
-       - `tasks/01_[name].md`, `tasks/02_[name].md`, etc.
-       - `MANIFEST.md`
+   **Deliverable:**
+   - Output files in `docs/epic_[name]/`:
+   - `plans/IMPLEMENTATION_PLAN.md`
+   - `plans/DECISION_LOG.md`
+   - `tasks/01_[name].md`, `tasks/02_[name].md`, etc.
+   - `MANIFEST.md`
 
-#### Part 1.3: Experimenting with Custom Planning Prompts
+#### Part 1.4: Experimenting with Custom Planning Prompts (Optional)
 
 Instead of using the structured prompt file, you can experiment with generating the plan using your own custom prompts. This is a great way to practice prompt engineering and compare outputs.
 
@@ -141,64 +122,12 @@ Instead of using the structured prompt file, you can experiment with generating 
 
 ### Phase 2: Collaborative Implementation Workflow
 
-#### Part 2.1: Create the Implementer Prompt File
-
-1. **Create `.github/prompts/custom_implement.prompt.md`:**
-
-```markdown
-You are a Python Implementer responsible for executing tasks with precision and quality.
-
-Your role:
-- Read and understand the task specification
--- Implement code following Python 3.10+, pytest, and modern Python best practices
-- Write clean, maintainable, well-documented code
-- Use proper error handling and validation patterns
-- Follow the existing project structure and conventions
-
-Process:
-1. Read the task file and summarize what you will do
-2. List all files you will create or modify (use absolute paths from project root)
-3. Ask for approval before proceeding
-4. After approval, implement the task step by step
-5. Run Black formatting, flake8 linting, and mypy type checks on modified files
-6. Execute tests if applicable
-7. Report completion status
-
-Code Standards:
-- Use descriptive module, class, and function names
-- Add docstrings for public classes and methods
-- Follow existing patterns in weather_service.py, weather_data.py, weather_client.py, config_util.py
-- Implement proper exception handling using custom exceptions
-- Use logging module for logging
-- Follow Black formatting and flake8 linting rules
-
-File Structure:
-- Main modules in src/weather_cli/
-- Test modules in tests/
-- Configuration files follow existing patterns (config_util.py, .env, etc.)
-
-Python Integration:
-- Run `black src tests` after code changes
-- Run `flake8 src tests` for code style validation
-- Run `pytest` for test execution
-- Run `mypy src` for type checking
-- Address any linting or type errors
-
-If verification fails:
-- Explain what went wrong
-- Propose a solution
-- Ask for guidance if blocked
-
-Always think through the task before implementing. Quality over speed.
-```
-
-#### Part 2.2: Implement the First Task
+#### Part 2.1: Implement the Tasks
 
 1. **Start a new Copilot Chat session**
-2. **Prime the agent**: Reference `#prompt:custom_implement`
-   - Or For JetBrains: `/custom_implement`
+2. **Select the Implementer agent**: Click the agent picker dropdown and select **"Implementer"**
 3. **Add task context**: Add `#file:docs/epic_weather_analytics/tasks/01_[task_name].md`
-4. **Request implementation**: "Implement this task following the process defined in the prompt."
+4. Run: `/implement`
 
 **The Implementer will:**
 - Read and summarize what it plans to do
@@ -208,16 +137,16 @@ Always think through the task before implementing. Quality over speed.
 **Your responsibility:**
 - Review the implementation plan
 - Confirm it matches the task specification
--- Check that it follows Python and project conventions
+- Check that it follows Python and project conventions
 - Approve with "yes" or request clarification
 
 **Once approved, the Implementer will:**
 - Execute the task step by step
--- Run Black formatting, flake8 linting, and mypy type checks
+- Run Black formatting, flake8 linting, and mypy type checks
 - Execute tests if applicable
 - Report completion status
 
-#### Part 2.3: Handle Implementation Issues
+#### Part 2.2: Handle Implementation Issues
 
 **If the task succeeds:**
 - Review the code changes
@@ -238,13 +167,13 @@ You can:
 - Modify the task specification
 - Go back to Lead Developer for task revision
 
-#### Part 2.4: Complete Remaining Tasks
+#### Part 2.3: Complete Remaining Tasks
 
 Repeat Part 2.2 for each task file in sequence (02, 03, etc.) until all tasks in the epic are complete.
 
-**Important:** Each task should be run in a fresh chat session with the Implementer role primed using `#prompt:custom_implement` or for JetBrains: `/custom_implement`
+**Important:** Each task should be run in a fresh Implementer session with just that task file as context.
 
-#### Part 2.5: Experimenting with Custom Implementation Prompts
+#### Part 2.4: Experimenting with Custom Implementation Prompts (Optional)
 
 Want to try a different implementation approach? Create your own prompt!
 
@@ -257,42 +186,17 @@ Want to try a different implementation approach? Create your own prompt!
 
 This hands-on approach helps you understand how to guide an agent through complex tasks.
 
-#### Part 2.6: Complete the Epic
+#### Part 2.5: Complete the Epic
 
 After the last task succeeds:
 
-1. **Create `.github/prompts/custom_report-to-lead.prompt.md`:**
+1. **Stay in Implementer agent** or start new session with Implementer selected
+2. **Attach context:**
+   - `#file:docs/epic_weather_analytics/plans/IMPLEMENTATION_PLAN.md`
+   - `#file:docs/epic_weather_analytics/MANIFEST.md`
+3. **Request:** "Generate a completion report for this epic."
 
-```markdown
-You are a Python Implementer reporting completion of an epic to the Lead Developer.
-
-Your task:
-- Review the implementation plan and manifest
-- Summarize all work completed
-- Note any deviations from the original plan
-- Highlight challenges encountered and how they were resolved
-- Provide recommendations for future epics
-- List all Python files created or modified
-
-Generate a completion report in markdown format with:
-- Epic name and summary
-- Completion status
-- Implementation summary
-- Deviations and rationale
-- Lessons learned
-- Recommendations
-
-Be concise but thorough. Focus on architectural decisions and code quality.
-```
-
-2. **Generate the Completion Report**
-   - Start a **new chat session** or continue in Implementer mode
-   - Reference: `#prompt:custom_report-to-lead`
-     - Or For JetBrains: `/custom_report-to-lead`
-   - Add context: `#file:docs/epic_weather_analytics/plans/IMPLEMENTATION_PLAN.md` and `#file:docs/epic_weather_analytics/MANIFEST.md`
-   - Request: "Generate the completion report."
-
-The agent generates a completion report with:
+The Implementer generates a completion report with:
 - Summary of work completed
 - Any deviations from plan
 - Recommendations for future epics
@@ -305,63 +209,95 @@ The weather data persistence system from Exercise 1 is feature-complete, but it 
 
 ### Phase 1: Test Strategy and Planning
 
-#### Part 1.1: Test Analysis with a QA Agent
+#### Part 1.0: Create a Custom QA Agent
 
-1. **Create `.github/prompts/custom_qa-analysis.prompt.md`:**
+Before beginning test analysis, create a specialized QA agent to focus on testing concerns.
 
-```markdown
-You are a QA Engineer specializing in Python testing and quality assurance.
+1.  **Create the QA Agent File**
+    *   In your project, create the directory `.github/agents/` if it doesn't exist
+    *   Create a new file: `.github/agents/QA Specialist.agent.md`
 
-Your task:
-- Analyze recently implemented features for testability
-- Identify critical code paths requiring testing
-- Generate comprehensive test case lists
-- Recommend testing tools and frameworks
-- Identify potential vulnerabilities and edge cases
+2.  **Define the QA Agent**
+    *   Define the Agent as required. Refer to the existing custom agents for structure. 
 
-Focus areas:
-- Unit tests for business logic (services, data models, utilities)
-- Integration tests for persistence layer and external API calls
-- Edge cases and error handling
-- Configuration and environment validation tests
-- Data validation and transformation tests
+3.  **Verify Agent Availability**
+    *   Open Copilot Chat
+    *   Click the agent picker dropdown
+    *   Verify **"QA Specialist"** appears in the list of available agents
 
-Deliverables:
-- List of test cases (unit, integration, end-to-end)
-- Security and reliability checklist
-- Testing framework recommendations (pytest, unittest, etc.)
-- Setup and configuration guidance
+**Deliverable:** Custom QA Specialist agent ready to use for test analysis.
 
-Use pytest, unittest, and Python testing best practices for Python 3.10+.
-```
+#### Part 1.1: Test Analysis with QA Specialist Agent
 
-2. **Analyze the Feature Implementation**
+1. **Analyze the Feature Implementation**
    - Open a new Copilot Chat session
-   - Reference: `#prompt:custom_qa-analysis`
-     - Or For JetBrains: `/custom_qa-analysis`
+   - Select **"QA Specialist"** from the agent picker
    - Ask: `@workspace Based on the recently added weather data persistence system, analyze what needs testing.`
    - Follow up: `Generate a comprehensive list of test cases covering unit, integration, and edge case scenarios.`
    - Request: `What testing frameworks and setup do we need for this Python 3.10+ project?`
 
+2. **Python Testing Framework and Setup Recommendations**
+   - Ask: `Given the Python project structure with pytest, what additional testing patterns would you recommend for CLI applications?`
+   - Request: `Outline the steps and code needed to enhance the existing pytest setup for testing the new analytics features.`
+   - Analyze: `How should we test CLI argument parsing and output formatting for the new analytics commands?`
+
 **Deliverable:** Create a `docs/TEST-ANALYSIS.md` file documenting the test cases, edge cases, and setup plan.
 
-#### Part 1.2: Test Plan Generation with Lead Developer
+#### Part 1.2: Test Strategy (Optional)
 
-1. **Generate Test Implementation Plan**
-   - Start a **new Copilot Chat session**
-   - Reference: `#prompt:custom_lead-plan`
-        - Or For JetBrains: `/custom_lead-plan`
-   - Add context: `#file:docs/TEST-ANALYSIS.md`
-   - Request: "Create a detailed test implementation plan. The epic name is 'weather_analytics_testing'. Focus on Python 3.10+, pytest, and project testing best practices."
+For a more strategic approach, you can add a high-level test strategy phase:
+
+1. **Create High-Level Test Strategy**
+   - Start a fresh Copilot Chat session
+   - Select **Plan** from the agent picker
+   - Attach the `docs/TEST-ANALYSIS.md` file as context
+   - Request: `Create a strategic test plan for the weather analytics system. Organize tests by priority (critical, high, medium) and type (unit, integration, e2e). Identify dependencies between test suites.`
+
+2. **Review and Prioritize**
+   - Review the test strategy provided
+   - Identify which tests are essential for MVP vs. nice-to-have
+   - Request: `What tests are absolutely critical before deploying to production?`
+
+**Deliverable:** Document the test strategy in `docs/epic_weather_analytics_testing/TEST_STRATEGY.md`
+
+#### Part 1.3: Manual Plan Generation (Alternative Approach)
+
+As an alternative to using structured agents, you can experiment with generating the plan manually using the built-in Agent mode. This is a great way to understand how to craft effective prompts and compare the outputs of different models.
+
+1. **Start a new chat session** and select **Agent** from the agent picker
+2. **Provide Context**: Drag both `TEST-ANALYSIS.md` file into the chat
+3. **Prompt the Agent**: Use a custom prompt to generate the plan. For example:
+   > "Based on the attached `TEST-ANALYSIS.md`, create a detailed, step-by-step implementation plan for the "weather_analytics_testing" epic. Break the work into small, numbered, sequential task files following Python testing best practices. For each task, define a clear goal and acceptance criteria. Also generate a MANIFEST.md file listing all the files you will create."
+4. **Create Files Manually**: Based on the agent's output, create the directory structure (`docs/epic_weather_analytics_testing/`) and the corresponding plan, task, and manifest files yourself.
+
+This approach gives you more fine-grained control and is an excellent exercise in prompt engineering.
+
+**Deliverable:** Document the test strategy in `docs/epic_weather_analytics_testing/TEST_STRATEGY.md`
+
+#### Part 1.4: Detailed Test Plan Generation with Lead Developer
+
+1. **Create the Test Implementation Plan**
+   - Start a new Copilot Chat session and select **"QA Specialist"** from the agent picker
+   - Provide both `TEST-ANALYSIS.md` and `TEST_STRATEGY.md` files as context
+   - Use the prompt: `/lead-plan Create a detailed, step-by-step test implementation plan based on the provided analysis and strategy. The epic name is "weather_analytics_testing".`
+   
+   **Note:** The `/lead-plan` prompt works with any custom agent. The QA Specialist will use its testing expertise to create test-focused tasks.
 
 2. **Review the Generated Plan**
     - The agent creates `docs/epic_weather_analytics_testing/` containing:
        - `plans/IMPLEMENTATION_PLAN.md`: Testing strategy
-       - `tasks/01_[name].md`, `tasks/02_[name].md`, etc.: Sequential test implementation tasks
+       - `plans/DECISION_LOG.md`: Testing framework and approach decisions
+       - `tasks/01_[name].md`, `tasks/02_[name].md`, etc.: Sequenced tasks like:
+           - Setting up the testing framework and configuration
+           - Writing unit tests for data models and services
+           - Writing integration tests for WeatherService and persistence
+           - Creating security-focused test cases (input validation, error handling)
+           - Implementing edge case tests
        - `MANIFEST.md`: Manifest of generated files
-   - Verify tasks are logical, sequential, and appropriately sized
+   - Verify that the tasks are logical, sequential, and appropriately sized
+   - Confirm that all security concerns and edge cases from earlier analysis are covered
 
-#### Part 1.3: Experimenting with Custom Test Planning
+#### Part 1.5: Experimenting with Custom Test Planning (Optional)
 
 Try creating the test plan with your own prompt:
 
@@ -379,11 +315,10 @@ Try creating the test plan with your own prompt:
 
 1. **Execute Tasks with the Implementer**
    - For each task file (starting with `01_...`), start a **new chat session**
-   - Reference: `#prompt:custom_implement`
-        - Or For JetBrains: `/custom_implement`
+   - Select **"Implementer"** from the agent picker
    - Add task: `#file:docs/epic_weather_analytics_testing/tasks/01_[task_name].md`
    - Request: "Implement this task."
-   - Review the plan and approve with "yes"
+   - Review the Implementer's plan and approve it by typing "yes"
    - The agent will write test files, configuration, and helper code
 
 #### Part 2.2: Experimenting with Custom Test Implementation
@@ -402,15 +337,34 @@ Try implementing tests with custom prompts:
 This is the core of the QA workflow.
 
 1. **Run the Newly Created Tests**
-   - After creating test files, run them from the terminal:
-   - Single test file: `pytest tests/test_analytics.py -v`
-   - Entire test suite: `pytest --cov=src`
+   - After the Implementer creates a test file, run it from your terminal:
+     ```bash
+     # Run specific test file
+     pytest tests/test_analytics.py -v
+     
+     # Run with coverage
+     pytest tests/test_analytics.py --cov=src/weather_cli
+     
+     # Run all tests
+     pytest --cov=src
+     ```
 
-2. **If Tests Pass:**
-   - Excellent! Move to the next task in sequence
-   - Commit your changes: `git add . && git commit -m "Complete task: [task_name]"`
+2. **Run Code Quality Checks**
+   ```bash
+   # Format code
+   black src tests
+   
+   # Check linting
+   flake8 src tests
+   
+   # Type checking
+   mypy src
+   ```
 
-3. **If Tests Fail (Bug Found):**
+3. **If Tests Pass:**
+   - Congratulations! Move to the next task in the sequence.
+
+4. **If Tests Fail (Bug Found):**
    - Start a **new chat session**
    - Paste the full error output into the chat
    - Ask: `@workspace This Python test is failing with the error below. Analyze the relevant Python code and the test to identify the bug. Propose a fix using Python best practices and proper exception handling.`
@@ -419,66 +373,28 @@ This is the core of the QA workflow.
    - Apply the fix, re-run tests to confirm they pass
    - Commit the fix: `git add . && git commit -m "Fix: [description]"`
 
-4. **Create `.github/prompts/custom_debug-test.prompt.md` for Systematic Debugging:**
+5. **Complete the Test Suite**
+   - Repeat the implement-run-fix cycle for all tasks in `docs/epic_weather_analytics_testing/tasks/`
+   - Ensure all tests pass before marking the epic complete
+   - Run the full suite: `pytest --cov=src` to verify everything works together
+   - Run code quality checks: `black src tests`, `flake8 src tests`, `mypy src` to ensure code quality
 
-```markdown
-You are a Python Debugging Specialist focused on test failures and quality issues.
-
-Your task:
-- Analyze pytest test failure output and stack traces
-- Identify root causes (logic errors, configuration issues, test setup problems)
-- Propose targeted fixes following Python best practices
-- Consider pip/requirements management, import issues, and Python path problems
-
-Process:
-1. Read the test failure output carefully
-2. Identify the failing test and what it was testing
-3. Analyze the relevant production code
-4. Determine the root cause
-5. Propose a specific fix with code examples
-6. Explain why the fix resolves the issue
-
-Common Python test issues:
-- pip dependency conflicts or missing test dependencies
-- Import path issues and module loading problems
-- Mock configuration problems (unittest.mock setup)
-- Exception handling in tests (expected vs actual exceptions)
-- Configuration loading issues (.env files, environment variables)
-- Threading or timing issues in tests
-- File I/O and resource management problems
-
-Provide clear, actionable fixes with proper error handling and Python best practices.
-```
-
-5. **Use the Debug Prompt for Systematic Fixing:**
-   - Start a new chat session
-   - Reference: `#prompt:custom_debug-test`
-    - Or For JetBrains: `/custom_debug-test`
-   - Add failing test file: `#file:tests/test_analytics.py`
-   - Paste error output and request: "Analyze this test failure and propose a fix."
-
-#### Part 2.4: Complete the Test Suite
-
-- Repeat the implement-run-fix cycle for all tasks in `docs/epic_weather_analytics_testing/tasks/`
-- Ensure all tests pass before marking the epic complete
-- Run the full suite: `pytest --cov=src` to verify everything works together
-- Run code quality checks: `black src tests`, `flake8 src tests`, `mypy src` to ensure code quality
-
-#### Part 2.5: Generate Test Completion Report
+#### Part 2.4: Generate Test Completion Report
 
 1. **Complete the Testing Epic**
-   - Start a **new chat session**
-   - Reference: `#prompt:custom_report-to-lead`
-        - Or For JetBrains: `/custom_report-to-lead`
+   - Start a **new chat session** or continue in Implementer mode
+   - Select **"Implementer"** from the agent picker (if starting new session)
    - Add context: `#file:docs/epic_weather_analytics_testing/plans/IMPLEMENTATION_PLAN.md` and `#file:docs/epic_weather_analytics_testing/MANIFEST.md`
    - Request: "Generate the completion report for the testing epic."
 
 ## Tips for Success
 
 - **One agent, one task, one chat session** - Don't mix contexts
-- **Double-check model selection** - Every time you switch threads, verify the model
+- **Double-check agent and model** - Every time you switch threads, verify the agent picker and model picker show the correct selections
 - **Use Claude Sonnet 4/4.5 for implementation** - It's superior for code generation and detailed planning
+- **Start fresh when stuck** - If an agent loses context or becomes confused, start a new chat session with clear context
 - **Read everything** - The agents generate detailed documentation for a reason
+- **Commit frequently** - After each successful task or epic
 - **Run Python tools frequently** - Use `pytest`, `black src tests`, `flake8 src tests`, `mypy src` after each successful task or epic
 - **Follow code style rules** - The project has established coding standards with Black, flake8, and mypy
 - **Trust but verify** - Agents follow patterns but can make mistakes with Python syntax and package configuration

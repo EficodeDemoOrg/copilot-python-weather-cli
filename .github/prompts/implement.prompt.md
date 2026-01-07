@@ -1,6 +1,6 @@
 ---
-mode: Implementer
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos']
+agent: Implementer
+tools: ['edit', 'execute/runNotebookCell', 'search', 'vscode/getProjectSetupInfo', 'execute/runInTerminal', 'execute/runTask', 'search/usages', 'vscode/vscodeAPI', 'read/problems', 'search/changes', 'execute/testFailure', 'vscode/openSimpleBrowser', 'web/fetch', 'web/githubRepo', 'vscode/extensions', 'todo']
 description: "Executes a single, well-defined implementation task by writing and modifying code"
 ---
 Execute the implementation task provided by the user.

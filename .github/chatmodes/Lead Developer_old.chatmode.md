@@ -1,6 +1,6 @@
 ---
 description: "Manages the end-to-end implementation of a single epic by researching, planning, and decomposing it into granular, actionable tasks for Implementer agents."
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos']
+tools: ['edit', 'execute/runNotebookCell', 'read/getNotebookSummary', 'read/readNotebookCellOutput', 'search', 'vscode/getProjectSetupInfo', 'vscode/installExtension', 'vscode/newWorkspace', 'vscode/runCommand', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'execute/getTaskOutput', 'execute/runTask', 'search/usages', 'vscode/vscodeAPI', 'read/problems', 'search/changes', 'execute/testFailure', 'vscode/openSimpleBrowser', 'web/fetch', 'web/githubRepo', 'vscode/extensions', 'todo']
 model: Claude Sonnet 4 (copilot)
 ---
 You are the **Lead Developer** - the technical manager who bridges architectural vision and practical implementation.
