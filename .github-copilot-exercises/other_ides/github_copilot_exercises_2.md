@@ -232,7 +232,7 @@ Before beginning test analysis, create a specialized QA agent to focus on testin
 1. **Analyze the Feature Implementation**
    - Open a new Copilot Chat session
    - Select **"QA Specialist"** from the agent picker
-   - Ask: `@workspace Based on the recently added weather data persistence system, analyze what needs testing.`
+   - Ask: `@project Based on the recently added weather data persistence system, analyze what needs testing.`
    - Follow up: `Generate a comprehensive list of test cases covering unit, integration, and edge case scenarios.`
    - Request: `What testing frameworks and setup do we need for this Python 3.10+ project?`
 
@@ -243,7 +243,7 @@ Before beginning test analysis, create a specialized QA agent to focus on testin
 
 **Deliverable:** Create a `docs/TEST-ANALYSIS.md` file documenting the test cases, edge cases, and setup plan.
 
-#### Part 1.2: Test Strategy (Optional)
+#### Part 1.2: Test Strategy
 
 For a more strategic approach, you can add a high-level test strategy phase:
 
@@ -274,7 +274,7 @@ This approach gives you more fine-grained control and is an excellent exercise i
 
 **Deliverable:** Document the test strategy in `docs/epic_weather_analytics_testing/TEST_STRATEGY.md`
 
-#### Part 1.4: Detailed Test Plan Generation with Lead Developer
+#### Part 1.4: Detailed Test Plan Generation with QA Specialist Agent
 
 1. **Create the Test Implementation Plan**
    - Start a new Copilot Chat session and select **"QA Specialist"** from the agent picker
@@ -367,7 +367,7 @@ This is the core of the QA workflow.
 4. **If Tests Fail (Bug Found):**
    - Start a **new chat session**
    - Paste the full error output into the chat
-   - Ask: `@workspace This Python test is failing with the error below. Analyze the relevant Python code and the test to identify the bug. Propose a fix using Python best practices and proper exception handling.`
+   - Ask: `@project This Python test is failing with the error below. Analyze the relevant Python code and the test to identify the bug. Propose a fix using Python best practices and proper exception handling.`
    - Include the error output in your message
    - Review the agent's analysis and proposed fix
    - Apply the fix, re-run tests to confirm they pass
